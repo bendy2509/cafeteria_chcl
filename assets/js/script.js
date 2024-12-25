@@ -10,10 +10,3 @@ openModal.addEventListener("click", () => {
 closeModal.addEventListener("click", () => {
     modal.classList.add("hidden");
 });
-
-// Fermer le modal si l'utilisateur clique en dehors du modal
-window.addEventListener("click", (e) => {
-    if (e.target === modal) {
-        modal.classList.add("hidden");
-    }
-});

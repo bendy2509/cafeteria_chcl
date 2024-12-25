@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ':prenom_user' => $prenom_user,
                     ':pseudo_user' => $pseudo_user,
                     ':email_user' => $email_user,
-                    ':password_user' => password_hash($password_user, PASSWORD_BCRYPT)
+                    ':password_user' => password_hash($password_user, PASSWORD_DEFAULT)
                 ]);
 
                 // Redirection après succès

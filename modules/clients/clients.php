@@ -4,10 +4,16 @@ require_once '../../includes/config.php';
 
 try {
     // Récupération des clients
-    $query = $pdo->query("SELECT code_client, nom_client, type_client, phone_client FROM clients");
+    $query = $pdo->query("SELECT id, code_client, nom_client, type_client, phone_client FROM clients");
     $clients = $query->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo "Erreur lors de la récupération des données : " . $e->getMessage();
+}
+
+// verifier si l'utilisateur est connecté
+if (!isset($_SESSION['id'])) {
+    header("Location: ../../login.php");
+    exit;
 }
 ?>
 <!DOCTYPE html>
@@ -23,49 +29,9 @@ try {
 <body class="bg-gray-50 min-h-screen flex">
 
     <!-- Barre latérale gauche -->
-    <aside class="w-64 bg-blue-800 text-white flex flex-col min-h-screen shadow-lg rounded-lg">
-        <div class="p-6 text-center font-extrabold text-xl border-b border-blue-700">
-            CAFETERIA
-        </div>
-        <nav class="flex-grow">
-            <ul class="space-y-2 mt-4">
-                <li>
-                    <a href="../../index.php"
-                        class="flex items-center font-bold p-4 hover:bg-white hover:text-blue-950 hover:rounded-lg rounded transition">
-                        <ion-icon name="home-outline" class="mr-2 pr-4"></ion-icon> Dashboard
-                    </a>
-                </li>
-                <li>
-                    <a href="./clients.php"
-                        class="flex items-center font-bold p-4 hover:bg-white hover:text-blue-950 hover:rounded-lg rounded transition">
-                        <ion-icon name="people-outline" class="mr-2 pr-4"></ion-icon> Clients
-                    </a>
-                </li>
-                <li>
-                    <a href="../plats/plats.php"
-                        class="flex items-center font-bold p-4 hover:bg-white hover:text-blue-950 hover:rounded-lg rounded transition">
-                        <ion-icon name="restaurant-outline" class="mr-2 pr-4"></ion-icon> Plats
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#"
-                        class="flex items-center font-bold p-4 hover:bg-white hover:text-blue-950 hover:rounded-lg rounded transition">
-                        <ion-icon name="cart-outline" class="mr-2 pr-4"></ion-icon> Ventes
-                    </a>
-                </li>
-                <li>
-                    <a href="../users/users.php"
-                        class="flex items-center font-bold p-4 hover:bg-white hover:text-blue-950 hover:rounded-lg rounded transition">
-                        <ion-icon name="people-outline" class="mr-2 pr-4"></ion-icon> Users
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <div class="p-4 text-center text-sm border-t border-blue-700">
-            &copy; 2024 Cafeteria CHCL
-        </div>
-    </aside>
+    <?php
+    include '../../includes/sidebar.php';
+    ?>
 
     <!-- Zone principale -->
     <main class="flex-grow p-6 relative">
@@ -89,6 +55,13 @@ try {
 
             if (isset($_GET['success'])) {
                 echo '<div class="bg-green-100 text-green-700 p-4 rounded mb-4">' . $_GET['success'] . '</div>';
+            }
+            // Le message success dans la session
+            if (isset($_SESSION['success'])) {
+                echo '<div class="bg-green-100 text-green-800 p-4 rounded mb-4">';
+                echo '<p>' . htmlspecialchars($_SESSION['success']) . '</p>';
+                echo '</div>';
+                unset($_SESSION['success']);
             }
             ?>
             <div class="flex justify-between items-center mb-4">
@@ -125,7 +98,13 @@ try {
                                     <td class="border p-2"><?= htmlspecialchars($client['phone_client']); ?></td>
                                     <td class="border p-2 text-center flex justify-center gap-4">
                                         <a href="#"
-                                            class="text-blue-500 hover:text-blue-700 px-3 py-1 rounded-md border border-blue-500 hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300">Modifier</a>
+                                            class="text-blue-500 hover:text-blue-700 px-3 py-1 rounded-md border border-blue-500 hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                            id="openEditClientModal_<?= htmlspecialchars($client['id']); ?>"
+                                            data-id="<?= htmlspecialchars($client['id']); ?>"
+                                            data-nom="<?= htmlspecialchars($client['nom_client']); ?>"
+                                            data-type="<?= htmlspecialchars($client['type_client']); ?>"
+                                            data-phone="<?= htmlspecialchars($client['phone_client']); ?>"
+                                            data-title="Modifier le client <?= htmlspecialchars($client['code_client']); ?>">Modifier</a>
                                         <a href="./delete_client.php?code_client=<?= htmlspecialchars($client['code_client']); ?>"
                                             class="text-red-500 hover:text-red-700 px-3 py-1 rounded-md border border-red-500 hover:border-red-700 focus:outline-none focus:ring-2 focus:ring-red-300"
                                             onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce client ?')">Supprimer</a>
@@ -179,10 +158,108 @@ try {
             </div>
         </section>
 
+        <section>
+            <!-- Modal de modification -->
+            <div id="editClientModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+                <div class="bg-white rounded-lg w-1/3 p-6">
+                    <h3 class="text-2xl font-bold text-blue-800 mb-4">Modifier Client</h3>
+
+                    <!-- Formulaire de modification client -->
+                    <form action="update_client.php" method="POST">
+                        <!-- Champs cachés pour passer le code client -->
+                        <input type="hidden" id="id_client_edit" name="id_client">
+
+                        <div class="mb-2">
+                            <label for="nom_client_edit" class="block text-gray-700">Nom</label>
+                            <input type="text" id="nom_client_edit" name="nom_client_edit" placeholder="Nom"
+                                class="w-full p-2 border border-gray-300 rounded mt-2" required>
+                        </div>
+                        <div class="mb-2">
+                            <label for="type_client_edit" class="block text-gray-700">Type</label>
+                            <select id="type_client_edit" name="type_client_edit"
+                                class="w-full p-2 border border-gray-300 rounded mt-2">
+                                <option value="etudiant">Étudiant</option>
+                                <option value="professeur">Professeur</option>
+                                <option value="personnel_admin">Personnel Admin</option>
+                                <option value="inviter">Inviter</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label for="phone_client_edit" class="block text-gray-700">Téléphone</label>
+                            <input type="text" id="phone_client_edit" name="phone_client_edit" placeholder="Téléphone"
+                                class="w-full p-2 border border-gray-300 rounded mt-2" required>
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button type="button" id="closeEditClientModal"
+                                class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Annuler</button>
+                            <button type="submit"
+                                class="bg-blue-500 text-white px-4 py-2 ml-2 rounded hover:bg-blue-600">Modifier</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
     </main>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="../../assets/js/script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const modalEdit = document.getElementById("editClientModal");
+            const closeModalEdit = document.getElementById("closeEditClientModal");
+
+            // Ajouter des écouteurs pour tous les boutons "Modifier"
+            document.querySelectorAll("[id^='openEditClientModal_']").forEach(button => {
+                button.addEventListener("click", () => {
+                    const clientId = button.getAttribute("data-id");
+                    const clientNom = button.getAttribute("data-nom");
+                    const clientType = button.getAttribute("data-type");
+                    const clientPhone = button.getAttribute("data-phone");
+
+                    //Recuperer le titre du modal
+                    const modalTitle =button.getAttribute("data-title");
+
+                    // Pré-remplir les champs du formulaire
+                    document.getElementById("nom_client_edit").value = clientNom || "";
+                    document.getElementById("phone_client_edit").value = clientPhone || "";
+                    document.getElementById("type_client_edit").value = clientType || "";
+
+                    // Mettre à jour l'ID de l'utilisateur
+                    document.getElementById("id_client_edit").value = clientId;
+
+                    //Mettre a jour
+                    document.getElementById("editClientModal").querySelector("h3").textContent = modalTitle;
+
+                    // Afficher le modal
+                    modalEdit.classList.remove("hidden");
+                    modalEdit.classList.add("flex");
+
+                    // fermer le modal
+                    closeModalEdit.addEventListener("click", () => {
+                        modalEdit.classList.add("hidden");
+                        modalEdit.classList.remove("flex");
+                    });
+
+                    // si client clic dehors
+                    window.addEventListener("click", (e) => {
+                        if (e.target === modalEdit) {
+                            modalEdit.classList.add("hidden");
+                            modalEdit.classList.remove("flex");
+                        }
+                    });
+                });
+            });
+
+            // Fermeture du modal
+            if (closeModalEdit) {
+                closeModalEdit.addEventListener("click", () => {
+                    modalEdit.classList.add("hidden");
+                    modalEdit.classList.remove("flex");
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

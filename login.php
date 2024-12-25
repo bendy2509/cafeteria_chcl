@@ -1,3 +1,46 @@
+<?php
+session_start();
+require_once './includes/config.php';
+// Verifier si le formulaire a ete soumis
+$error = [];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = trim($_POST['username']);
+    $password = $_POST['password'];
+
+    // Verifier les champs
+    if (empty($username) || empty($password)) {
+        $error[] = "Tous les champs sont obligatoires.";
+    } else {
+        // Requete pour recuperer l'utilisateur
+        $stmt = $pdo->prepare("SELECT id, pseudo_user, email_user, password_user, nom_user, prenom_user FROM users WHERE pseudo_user = :username OR email_user = :username");
+        $stmt->execute([
+            ':username' => $username
+        ]);
+        // recuperer le resultat
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        // Verifier si l'utilisateur existe
+        if ($user) {
+            // Vérifier le mot de passe
+            if (password_verify($password, $user['password_user'])) {
+                // Connexion réussie
+                $_SESSION['id'] = $user['id'];
+                $_SESSION['pseudo_user'] = $user['pseudo_user'];
+                $_SESSION['nom_user'] = $user['nom_user'];
+                $_SESSION['prenom_user'] = $user['prenom_user'];
+
+                header("Location: ./index.php", true, 303);
+                exit();
+            } else {
+                // Mot de passe incorrect
+                $error[] = "Pseudo/Email ou mot de passe incorrect.";
+            }
+            $error[] = "Pseudo/Email ou mot de passe incorrect.";
+        }
+    }
+    // Enregistrer les erreurs dans la session
+    $_SESSION['errors'] = $error;
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -5,7 +48,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page d'Authentification</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="./assets/css/styles.css">
     <style>
         .card {
             position: relative;
@@ -16,22 +59,12 @@
 
         .card::before {
             content: '';
-            content: '';
             position: absolute;
-            width: 80%;
+            width: 400px;
             background-image: linear-gradient(180deg, rgb(0, 183, 255), rgb(255, 48, 255));
-            height: 130%;
-            animation: rotBGimg 3s linear infinite;
-            transition: all 0.2s linear;
-        }
-
-        .card::after {
-            content: '';
-            position: absolute;
-            inset: 5px;
-            background: #07182E;
-            border-radius: 15px;
-            z-index: 1;
+            height: 400px;
+            animation: rotBGimg 4s linear infinite;
+            transition: all .2s linear;
         }
 
         /* Animation de rotation */
@@ -43,6 +76,15 @@
             to {
                 transform: rotate(360deg);
             }
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            inset: 5px;
+            background: #07182E;
+            border-radius: 15px;
+            z-index: 1;
         }
 
         .card img {
@@ -67,7 +109,16 @@
         <div class="w-full md:w-1/2 p-8">
             <h2 class="text-3xl font-bold text-gray-800 text-center">Bienvenue</h2>
             <p class="text-gray-600 text-center mt-2">Connectez-vous à votre compte</p>
-
+            <?php
+            if (!empty($_SESSION['errors'])) {
+                echo '<div class="bg-red-100 text-red-700 p-4 rounded mb-4">';
+                foreach ($_SESSION['errors'] as $error) {
+                    echo '<p>' . htmlspecialchars($error) . '</p>';
+                }
+                echo '</div>';
+                unset($_SESSION['errors']);
+            }
+            ?>
             <form action="login.php" method="POST" class="space-y-6 mt-8">
                 <!-- Champ pseudo ou email -->
                 <div>
