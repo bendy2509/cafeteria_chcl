@@ -12,29 +12,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($client)) {
         $errors[] = "Le nom du client est requis.";
     }
-    if (!preg_match('/^[+]?[0-9]+$/', $nbre_plat)) {
-        $errors[] = "Pour le nombre de plat un nombre entier est requis.";
+    if ($nbre_plat > 1) {
+        $errors[] = "Un seul plat est requis pour un client.";
     }
 
     if (empty($errors)) {
         try {
-            // Insérer la nouvelle vente dans la base de données
+            // Vérifier si une vente existe déjà pour ce client et ce plat aujourd'hui
             $stmt = $pdo->prepare("
-                INSERT INTO ventes (code_plat, code_client, nbre_plat)
-                VALUES (:code_plat, :code_client, :nbre_plat)
+                SELECT COUNT(*) FROM ventes 
+                WHERE code_client = :code_client
+                AND DATE(date_vente) = CURDATE()
             ");
             $stmt->execute([
-                ':code_plat' => $code_plat,
-                ':code_client' => $client,
-                ':nbre_plat' => $nbre_plat
+                ':code_client' => $client
             ]);
 
-            //Ajout un message dans la session
-            $_SESSION['success'] = "Vente ajouté avec succès.";
+            if ($stmt->fetchColumn() > 0) {
+                $errors[] = "Une vente a déjà été effectuée pour ce client aujourd'hui.";
+            } else {
+                // Insérer la nouvelle vente dans la base de données
+                $stmt = $pdo->prepare("
+                    INSERT INTO ventes (code_plat, code_client, nbre_plat)
+                    VALUES (:code_plat, :code_client, :nbre_plat)
+                ");
+                $stmt->execute([
+                    ':code_plat' => $code_plat,
+                    ':code_client' => $client,
+                    ':nbre_plat' => $nbre_plat
+                ]);
 
-            // Redirection après succès
-            header("Location: ./ventes.php");
-            exit;
+                // Ajout un message dans la session
+                $_SESSION['success'] = "Vente ajoutée avec succès.";
+                // Redirection après succès
+                header("Location: ./ventes.php");
+                exit;
+            }
         } catch (PDOException $e) {
             $errors[] = "Erreur lors de l'ajout de la vente : " . $e->getMessage();
         }

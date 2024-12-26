@@ -13,7 +13,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             // Rediriger avec un message de succès
             header("Location: ./ventes.php?success=Vente supprimé avec succès.");
         } else {
-            // Aucun Vente supprime
+            // Aucune Vente supprimee
             header("Location: ./ventes.php?error=Vente introuvable.");
         }
     } catch (PDOException $e) {
