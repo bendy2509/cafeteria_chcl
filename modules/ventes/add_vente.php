@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($client)) {
         $errors[] = "Le nom du client est requis.";
     }
-    if ($nbre_plat > 1) {
+    if ($nbre_plat > 1 || $nbre_plat < 1) {
         $errors[] = "Un seul plat est requis pour un client.";
     }
 

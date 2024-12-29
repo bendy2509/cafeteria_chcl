@@ -47,9 +47,9 @@ if (!isset($_SESSION['id'])) {
     ?>
 
     <!-- Zone principale -->
-    <main class="flex-grow p-6">
+    <main class="flex-grow p-6 min-h-screen relative">
         <!-- En-tête -->
-        <header class="bg-white shadow p-6 rounded-lg text-center mb-6">
+        <header class="bg-green-500 shadow p-6 rounded-lg text-center mb-6">
             <h1 class="text-4xl font-extrabold text-blue-800">CAFETERIA DU CHCL</h1>
             <p class="text-gray-500 text-sm mt-2">Bienvenue sur votre tableau de bord</p>
         </header>
@@ -58,7 +58,7 @@ if (!isset($_SESSION['id'])) {
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <?php
             $cards = [
-                ['title' => 'Total des Plats', 'icon' => 'restaurant-outline', 'value' => $data['totalPlats'], 'bgClass' => 'from-blue-500 to-blue-600'],
+                ['title' => 'Total des Plats', 'icon' => 'restaurant-outline', 'value' => $data['totalPlats'], 'bgClass' => 'from-orange-500 to-orange-600'],
                 ['title' => 'Total des Clients', 'icon' => 'people-outline', 'value' => $data['totalClients'], 'bgClass' => 'from-green-500 to-green-600'],
                 ['title' => 'Total des Ventes', 'icon' => 'cart-outline', 'value' => $data['totalVentes'], 'bgClass' => 'from-orange-500 to-orange-600'],
                 ['title' => 'Total des Users', 'icon' => 'people-outline', 'value' => $data['totalUsers'], 'bgClass' => 'from-indigo-500 to-indigo-600'],
@@ -77,9 +77,78 @@ if (!isset($_SESSION['id'])) {
                 </div>
             <?php endforeach; ?>
         </div>
+        <!-- Ajout du bouton pour générer un rapport centré vers le bas -->
+        <section class="absolute bottom-0 left-0 mx-auto w-full flex justify-center items-center mb-6">
+            <button id="openModal"
+                class="p-6 bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white font-bold text-lg rounded-full shadow-lg transition transform hover:scale-105 focus:ring-4 focus:ring-green-300 focus:outline-none">
+                <ion-icon name="document-text-outline" class="text-2xl mr-2 align-middle"></ion-icon>
+                Générer un rapport
+            </button>
+        </section>
+
+        <section>
+            <!-- Modal (masqué par défaut) -->
+            <div id="modal"
+                class="fixed inset-0 bg-gray-800 bg-opacity-50 items-center justify-center hidden">
+                <div class="bg-white rounded-lg shadow-lg p-6 w-[400px]">
+                    <h2 class="text-xl font-bold mb-4 text-gray-800">Sélectionner les dates</h2>
+                    <form id="dateForm" class="space-y-4">
+                        <!-- Champ Date Début -->
+                        <div>
+                            <label for="startDate" class="block text-sm font-medium text-gray-700">Date Début</label>
+                            <input type="date" id="startDate" name="startDate"
+                                class="w-full px-3 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <!-- Champ Date de Fin -->
+                        <div>
+                            <label for="endDate" class="block text-sm font-medium text-gray-700">Date de Fin</label>
+                            <input type="date" id="endDate" name="endDate"
+                                class="w-full px-3 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <!-- Boutons -->
+                        <div class="flex justify-end space-x-4">
+                            <button type="button" id="closeModal"
+                                class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">
+                                Annuler
+                            </button>
+                            <button type="submit"
+                                class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                                Confirmer
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+
     </main>
+
+
+
+
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+        // Récupération des éléments du DOM
+        const openModal = document.getElementById('openModal');
+        const closeModal = document.getElementById('closeModal');
+        const modal = document.getElementById('modal');
+
+        // Afficher le modal
+        openModal.addEventListener('click', () => {
+            modal.classList.remove('hidden');
+            // Ajouter la classe 'flex' pour centrer le modal
+            modal.classList.add('flex');
+        });
+
+        // Masquer le modal
+        closeModal.addEventListener('click', () => {
+            modal.classList.add('hidden');
+            // Retirer la classe 'flex' pour centrer le modal
+            modal.classList.remove('flex');
+        });
+    </script>
 </body>
 
 </html>

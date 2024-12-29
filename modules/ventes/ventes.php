@@ -74,7 +74,7 @@ if (!isset($_SESSION['id'])) {
             <div class="overflow-x-auto">
                 <table class="w-full border-collapse">
                     <thead>
-                        <tr class="bg-gray-100 text-left">
+                        <tr class="bg-[#fcb126] text-left">
                             <th class="border p-2 text-center">ID</th>
                             <th class="border p-2 text-center">Client</th>
                             <th class="border p-2 text-center">Plat</th>
@@ -89,8 +89,8 @@ if (!isset($_SESSION['id'])) {
                             </tr>
                         <?php else: ?>
                             <?php foreach ($ventes as $vente): ?>
-                                <tr>
-                                    <td class="border p-2 text-center"><?= htmlspecialchars($vente['id']); ?></td>
+                                <tr >
+                                    <td class="bg-[#ECBF2D] border p-2 text-center"><?= htmlspecialchars($vente['id']); ?></td>
                                     <td class="border p-2"><?= htmlspecialchars($vente['nom_client']); ?></td>
                                     <td class="border p-2"><?= htmlspecialchars($vente['nom_plat']); ?></td>
                                     <td class="border p-2 text-center"><?= htmlspecialchars($vente['nbre_plat']); ?></td>
