@@ -4,12 +4,14 @@ require_once './includes/config.php';
 
 $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $firstname = trim($_POST['firstname']);
+    $name = trim($_POST['name']);
     $username = trim($_POST['username']);
     $email = trim($_POST['email']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
-    if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
+    if (empty($username) || empty($email) || empty($password) || empty($confirm_password || empty($firstname) || empty($name))) {
         $errors[] = "Tous les champs sont obligatoires.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = "Adresse email invalide.";
@@ -24,12 +26,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $errors[] = "Le pseudo ou l'email est déjà utilisé.";
         } else {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $pdo->prepare("INSERT INTO users (pseudo_user, email_user, password_user) 
-                                   VALUES (:username, :email, :password)");
+            $stmt = $pdo->prepare("INSERT INTO users (pseudo_user, email_user, password_user, nom_user, prenom_user) 
+                                   VALUES (:username, :email, :password, :firstname, :name)");
             $stmt->execute([
                 ':username' => $username,
                 ':email' => $email,
-                ':password' => $hashed_password
+                ':password' => $hashed_password,
+                ':name' => $name,
+                'firstname' => $firstname
             ]);
             $_SESSION['success'] = "Inscription réussie ! Vous pouvez maintenant vous connecter.";
             header("Location: login.php", true, 303);
@@ -69,24 +73,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- Formulaire -->
         <form action="register.php" method="POST" class="mt-6 space-y-4">
+            <div class="flex gap-4 w-full">
+                <!-- Ajouter un champ pour le prenom -->
+                <div>
+                    <label for="firstname" class="block text-sm font-medium text-gray-700">Prenom</label>
+                    <input type="text" id="firstname" name="firstname" placeholder="Entrez votre pseudo"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+                <!-- Ajouter un champ pour le nom -->
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700">Nom</label>
+                    <input type="text" id="name" name="name" placeholder="Entrez votre pseudo"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+            </div>
             <div>
-                <label for="username" class="block text-sm font-medium text-gray-700">Pseudo</label>
+                <label for="username" class="block text-sm font-medium text-gray-700">Pseudo <span
+                        class="text-red-600">*</span></label>
                 <input type="text" id="username" name="username" placeholder="Entrez votre pseudo"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
             </div>
             <div>
-                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email <span
+                        class="text-red-600">*</span></label>
                 <input type="email" id="email" name="email" placeholder="Entrez votre email"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
             </div>
+
             <div>
-                <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
+                <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe <span
+                        class="text-red-600">*</span></label>
                 <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
             </div>
             <div>
-                <label for="confirm_password" class="block text-sm font-medium text-gray-700">Confirmer le mot de passe</label>
-                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirmez votre mot de passe"
+                <label for="confirm_password" class="block text-sm font-medium text-gray-700">Confirmer le mot de passe
+                    <span class="text-red-600">*</span></label>
+                <input type="password" id="confirm_password" name="confirm_password"
+                    placeholder="Confirmez votre mot de passe"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
             </div>
             <button type="submit"

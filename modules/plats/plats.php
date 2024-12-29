@@ -100,21 +100,35 @@ if (!isset($_SESSION['id'])) {
                                     <td class="border p-2"><?= htmlspecialchars($plat['prix_plat']); ?> HTG</td>
                                     <td class="border p-2"><?= htmlspecialchars($plat['quantite_plat']); ?></td>
                                     <td class="border p-2 text-center flex justify-center gap-4">
-                                        <a href="#"
-                                            class="text-blue-500 hover:text-blue-700 px-3 py-1 rounded-md border border-blue-500 hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                                            id="openEditPlatModal_<?= htmlspecialchars($plat['code_plat']); ?>"
-                                            data-codeid="<?= htmlspecialchars($plat['code_plat']); ?>"
-                                            data-nom="<?= htmlspecialchars($plat['nom_plat']); ?>"
-                                            data-cuisson="<?= htmlspecialchars($plat['cuisson_plat']); ?>"
-                                            data-prix="<?= htmlspecialchars($plat['prix_plat']); ?>"
-                                            data-quantite="<?= htmlspecialchars($plat['quantite_plat']); ?>"
-                                            data-title="Modifier le plat <?= htmlspecialchars($plat['code_plat']); ?>">Modifier</a>
-                                        <a href="./delete_plat.php?code_plat=<?= $plat['code_plat']; ?>"
-                                            class="text-red-500 hover:text-red-700 px-3 py-1 rounded-md border border-red-500 hover:border-red-700 focus:outline-none focus:ring-2 focus:ring-red-300"
-                                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce plat ?')">Supprimer</a>
+                                        <?php if ($_SESSION['role_user'] == 'admin'): ?>
+                                            <a href="#"
+                                                class="text-blue-500 hover:text-blue-700 px-3 py-1 rounded-md border border-blue-500 hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                                id="openEditPlatModal_<?= htmlspecialchars($plat['code_plat']); ?>"
+                                                data-codeid="<?= htmlspecialchars($plat['code_plat']); ?>"
+                                                data-nom="<?= htmlspecialchars($plat['nom_plat']); ?>"
+                                                data-cuisson="<?= htmlspecialchars($plat['cuisson_plat']); ?>"
+                                                data-prix="<?= htmlspecialchars($plat['prix_plat']); ?>"
+                                                data-quantite="<?= htmlspecialchars($plat['quantite_plat']); ?>"
+                                                title="Modifier le plat <?= htmlspecialchars($plat['nom_plat']); ?>">
+                                                Modifier
+                                            </a>
+
+                                            <!-- Bouton Supprimer actif pour les autres plats -->
+                                            <a href="./delete_plat.php?code_plat=<?= htmlspecialchars($plat['code_plat']); ?>"
+                                                class="text-red-500 hover:text-red-700 px-3 py-1 rounded-md border border-red-500 hover:border-red-700 focus:outline-none focus:ring-2 focus:ring-red-300"
+                                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce plat ?')"
+                                                title="Supprimer le plat <?= htmlspecialchars($plat['nom_plat']); ?>">
+                                                Supprimer
+                                            </a>
+
+                                        <?php else: ?>
+                                            <!-- Si l'utilisateur n'est pas admin, les boutons ne sont pas affichés -->
+                                            <span class="text-gray-400">Aucune action autorisée</span>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
+
                         <?php endif; ?>
                     </tbody>
                 </table>

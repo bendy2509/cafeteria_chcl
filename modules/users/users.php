@@ -102,39 +102,45 @@ try {
                                     <td class="border p-2"><?= htmlspecialchars($user['nom_user']); ?></td>
                                     <td class="border p-2"><?= htmlspecialchars($user['role_user']); ?></td>
                                     <td class="border p-2 text-center flex justify-center gap-4">
-                                        <?php if ($user['id'] == $_SESSION['id']): ?>
-                                            <!-- Activer le bouton Modifier pour l'utilisateur connecté -->
-                                            <a href="#"
-                                                class="text-blue-500 hover:text-blue-700 px-3 py-1 rounded-md border border-blue-500 hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                                                id="openEditUserModal_<?= htmlspecialchars($user['id']); ?>"
-                                                data-id="<?= htmlspecialchars($user['id']); ?>"
-                                                data-nom="<?= htmlspecialchars($user['nom_user']); ?>"
-                                                data-role="<?= htmlspecialchars($user['role_user']); ?>"
-                                                data-prenom="<?= htmlspecialchars($user['prenom_user']); ?>"
-                                                data-title="Modifier vos informations">Modifier</a>
-                                            <!-- Désactiver uniquement le bouton Supprimer -->
-                                            <button
-                                                class="text-gray-400 bg-gray-200 px-3 py-1 rounded-md border border-gray-300 cursor-not-allowed"
-                                                disabled aria-disabled="true"
-                                                title="Vous ne pouvez pas vous supprimer vous-même">Supprimer</button>
+                                        <?php if ($_SESSION['role_user'] == 'admin'): ?>
+                                            <?php if ($user['id'] == $_SESSION['id']): ?>
+                                                <!-- Activer le bouton Modifier pour l'utilisateur connecte -->
+                                                <a href="#"
+                                                    class="text-blue-500 hover:text-blue-700 px-3 py-1 rounded-md border border-blue-500 hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                                    id="openEditUserModal_<?= htmlspecialchars($user['id']); ?>"
+                                                    data-id="<?= htmlspecialchars($user['id']); ?>"
+                                                    data-nom="<?= htmlspecialchars($user['nom_user']); ?>"
+                                                    data-role="<?= htmlspecialchars($user['role_user']); ?>"
+                                                    data-prenom="<?= htmlspecialchars($user['prenom_user']); ?>"
+                                                    data-title="Modifier vos informations">Modifier</a>
+                                                <!-- Desactiver le bouton Supprimer -->
+                                                <button
+                                                    class="text-gray-400 bg-gray-200 px-3 py-1 rounded-md border border-gray-300 cursor-not-allowed"
+                                                    disabled aria-disabled="true"
+                                                    title="Vous ne pouvez pas vous supprimer vous-même">Supprimer</button>
+                                            <?php else: ?>
+                                                <!-- Boutons actifs pour les autres utilisateurs -->
+                                                <a href="#"
+                                                    class="text-blue-500 hover:text-blue-700 px-3 py-1 rounded-md border border-blue-500 hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                                    id="openEditUserModal_<?= htmlspecialchars($user['id']); ?>"
+                                                    data-id="<?= htmlspecialchars($user['id']); ?>"
+                                                    data-nom="<?= htmlspecialchars($user['nom_user']); ?>"
+                                                    data-role="<?= htmlspecialchars($user['role_user']); ?>"
+                                                    data-prenom="<?= htmlspecialchars($user['prenom_user']); ?>"
+                                                    data-title="Modifier l'utilisateur <?= htmlspecialchars($user['pseudo_user']); ?>">Modifier</a>
+                                                <a href="./delete_user.php?id=<?= htmlspecialchars($user['id']); ?>"
+                                                    class="text-red-500 hover:text-red-700 px-3 py-1 rounded-md border border-red-500 hover:border-red-700 focus:outline-none focus:ring-2 focus:ring-red-300"
+                                                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')"
+                                                    title="Supprimer l'utilisateur <?= htmlspecialchars($user['pseudo_user']); ?>">Supprimer</a>
+                                            <?php endif; ?>
                                         <?php else: ?>
-                                            <!-- Boutons actifs pour les autres utilisateurs -->
-                                            <a href="#"
-                                                class="text-blue-500 hover:text-blue-700 px-3 py-1 rounded-md border border-blue-500 hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                                                id="openEditUserModal_<?= htmlspecialchars($user['id']); ?>"
-                                                data-id="<?= htmlspecialchars($user['id']); ?>"
-                                                data-nom="<?= htmlspecialchars($user['nom_user']); ?>"
-                                                data-role="<?= htmlspecialchars($user['role_user']); ?>"
-                                                data-prenom="<?= htmlspecialchars($user['prenom_user']); ?>"
-                                                data-title="Modifier l'utilisateur <?= htmlspecialchars($user['pseudo_user']); ?>">Modifier</a>
-                                            <a href="./delete_user.php?id=<?= htmlspecialchars($user['id']); ?>"
-                                                class="text-red-500 hover:text-red-700 px-3 py-1 rounded-md border border-red-500 hover:border-red-700 focus:outline-none focus:ring-2 focus:ring-red-300"
-                                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')"
-                                                title="Supprimer l'utilisateur <?= htmlspecialchars($user['pseudo_user']); ?>">Supprimer</a>
+                                            <!-- Si l'utilisateur n'est pas admin, les boutons ne sont pas affiches -->
+                                            <span class="text-gray-400">Aucune action autorisée</span>
                                         <?php endif; ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
+
                         <?php endif; ?>
                     </tbody>
                 </table>

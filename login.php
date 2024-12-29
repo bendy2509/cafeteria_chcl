@@ -10,8 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($username) || empty($password)) {
         $errors[] = "Tous les champs sont obligatoires.";
     } else {
-        $stmt = $pdo->prepare("SELECT id, pseudo_user, email_user, password_user, nom_user, prenom_user 
-                               FROM users 
+        $stmt = $pdo->prepare("SELECT id, pseudo_user, email_user, password_user, nom_user, prenom_user, 
+                               role_user FROM users 
                                WHERE pseudo_user = :username OR email_user = :username");
         $stmt->execute([':username' => $username]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['pseudo_user'] = $user['pseudo_user'];
             $_SESSION['nom_user'] = $user['nom_user'];
             $_SESSION['prenom_user'] = $user['prenom_user'];
+            $_SESSION['role_user'] = $user['role_user'];
 
             header("Location: ./index.php", true, 303);
             exit();

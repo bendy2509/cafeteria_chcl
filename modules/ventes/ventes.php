@@ -95,20 +95,30 @@ if (!isset($_SESSION['id'])) {
                                     <td class="border p-2"><?= htmlspecialchars($vente['nom_plat']); ?></td>
                                     <td class="border p-2 text-center"><?= htmlspecialchars($vente['nbre_plat']); ?></td>
                                     <td class="border p-2 text-center flex justify-center gap-4">
-                                        <a href="#" id="openEditVenteModal_<?= htmlspecialchars($vente['id']); ?>"
-                                            data-quantite="<?= htmlspecialchars($vente['nbre_plat']); ?>"
-                                            data-id="<?= htmlspecialchars($vente['id']); ?>"
-                                            class="text-blue-500 hover:text-blue-700 px-3 py-1 rounded-md border">
-                                            Modifier
-                                        </a>
-                                        <a href="./delete_vente.php?id=<?= $vente['id']; ?>"
-                                            class="text-red-500 hover:text-red-700 px-3 py-1 rounded-md border"
-                                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette vente ?')">
-                                            Supprimer
-                                        </a>
+                                        <?php if ($_SESSION['role_user'] == 'admin'): ?>
+                                            <a href="#" id="openEditVenteModal_<?= htmlspecialchars($vente['id']); ?>"
+                                                data-quantite="<?= htmlspecialchars($vente['nbre_plat']); ?>"
+                                                data-id="<?= htmlspecialchars($vente['id']); ?>"
+                                                class="text-blue-500 hover:text-blue-700 px-3 py-1 rounded-md border"
+                                                title="Modifier la vente n°<?= htmlspecialchars($vente['id']); ?>">
+                                                Modifier
+                                            </a>
+
+                                            <!-- Bouton Supprimer actif pour les autres ventes -->
+                                            <a href="./delete_vente.php?id=<?= htmlspecialchars($vente['id']); ?>"
+                                                class="text-red-500 hover:text-red-700 px-3 py-1 rounded-md border border-red-500 hover:border-red-700 focus:outline-none focus:ring-2 focus:ring-red-300"
+                                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette vente ?')"
+                                                title="Supprimer la vente n°<?= htmlspecialchars($vente['id']); ?>">
+                                                Supprimer
+                                            </a>
+                                        <?php else: ?>
+                                            <!-- Si l'utilisateur n'est pas admin, les boutons ne sont pas affichés -->
+                                            <span class="text-gray-400">Aucune action autorisée</span>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
+
                         <?php endif; ?>
                     </tbody>
                 </table>
