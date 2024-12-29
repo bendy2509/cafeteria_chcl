@@ -49,7 +49,7 @@ if (!isset($_SESSION['id'])) {
     <!-- Zone principale -->
     <main class="flex-grow p-6 min-h-screen relative">
         <!-- En-tête -->
-        <header class="bg-green-500 shadow p-6 rounded-lg text-center mb-6">
+        <header class=" shadow p-6 rounded-lg text-center mb-6">
             <h1 class="text-4xl font-extrabold text-blue-800">CAFETERIA DU CHCL</h1>
             <p class="text-gray-500 text-sm mt-2">Bienvenue sur votre tableau de bord</p>
         </header>
