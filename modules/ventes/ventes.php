@@ -74,7 +74,7 @@ if (!isset($_SESSION['id'])) {
             <div class="overflow-x-auto">
                 <table class="w-full border-collapse">
                     <thead>
-                        <tr class="bg-[#fcb126] text-left">
+                        <tr class="bg-[#fcb126] text-left text-white">
                             <th class="border p-2 text-center">ID</th>
                             <th class="border p-2 text-center">Client</th>
                             <th class="border p-2 text-center">Plat</th>
@@ -89,8 +89,8 @@ if (!isset($_SESSION['id'])) {
                             </tr>
                         <?php else: ?>
                             <?php foreach ($ventes as $vente): ?>
-                                <tr >
-                                    <td class="bg-[#ECBF2D] border p-2 text-center"><?= htmlspecialchars($vente['id']); ?></td>
+                                <tr>
+                                    <td class="bg-[#FBEA92] border p-2 text-center"><?= htmlspecialchars($vente['id']); ?></td>
                                     <td class="border p-2"><?= htmlspecialchars($vente['nom_client']); ?></td>
                                     <td class="border p-2"><?= htmlspecialchars($vente['nom_plat']); ?></td>
                                     <td class="border p-2 text-center"><?= htmlspecialchars($vente['nbre_plat']); ?></td>
@@ -128,9 +128,9 @@ if (!isset($_SESSION['id'])) {
         <!-- Modal d'ajout de vente -->
         <section>
             <div id="modal" class="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 hidden">
-                <div class="w-full max-w-md p-6 m-auto bg-white rounded-lg shadow-lg relative">
-                    <h2 class="text-2xl font-bold mb-4">Ajouter une vente</h2>
-                    <form action="./add_vente.php" method="POST" class="space-y-4">
+                <div class="w-full max-w-md p-6 m-auto rounded-lg shadow-lg relative bg-[#fcb126]">
+                    <h2 class="text-2xl font-bold mb-4 text-white">Ajouter une vente</h2>
+                    <form action="./add_vente.php" method="POST" class="space-y-4 bg-orange-100 p-4 rounded-lg">
                         <div>
                             <label for="client" class="block text-sm font-medium text-gray-700">Client</label>
                             <select name="client" id="client"
@@ -243,7 +243,7 @@ if (!isset($_SESSION['id'])) {
         // Ouvrir le modal de la modification de vente
         const openEditModals = document.querySelectorAll('[id^="openEditVenteModal_"]');
         openEditModals.forEach(openEditModal => {
-            openEditModal.addEventListener('click', function () {
+            openEditModal.addEventListener('click', function() {
                 const modalEdit = document.getElementById('modalEdit');
                 const id = this.getAttribute('data-id');
                 const quantite = this.getAttribute('data-quantite');
@@ -256,19 +256,18 @@ if (!isset($_SESSION['id'])) {
 
         // Fermer le modal de modification de vente
         const closeEditModal = document.getElementById('closeEditModal');
-        closeEditModal.addEventListener('click', function () {
+        closeEditModal.addEventListener('click', function() {
             const modalEdit = document.getElementById('modalEdit');
             modalEdit.classList.add('hidden');
         });
 
         // si il clic en dehors du modal, le modal se ferme
-        window.addEventListener('click', function (event) {
+        window.addEventListener('click', function(event) {
             const modalEdit = document.getElementById('modalEdit');
             if (event.target === modalEdit) {
                 modalEdit.classList.add('hidden');
             }
         });
-
     </script>
 </body>
 
