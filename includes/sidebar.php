@@ -62,7 +62,7 @@ $base_url = 'http://localhost/cafeteria/';
     </nav>
 
     <!-- Profil utilisateur -->
-    <div class="bg-[rgba(26,39,217,0.91)] py-4">
+    <div class="bg-[#15616D] py-4">
         <div class="text-center">
             <ion-icon name="person-circle-outline" class="text-4xl mb-2"></ion-icon>
             <div class="font-semibold text-lg">
@@ -79,7 +79,7 @@ $base_url = 'http://localhost/cafeteria/';
     </div>
 
     <!-- Footer -->
-    <footer class="text-center py-4 bg-blue-800 text-blue-400 text-sm">
+    <footer class="text-center py-4 bg-[#15616D] text-blue-400 text-sm">
         &copy; 2024 Cafeteria CHCL
     </footer>
 </aside>

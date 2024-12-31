@@ -94,7 +94,7 @@ if (!isset($_SESSION['id'])) {
                                     <td class="border p-2"><?= htmlspecialchars($vente['nom_client']); ?></td>
                                     <td class="border p-2"><?= htmlspecialchars($vente['nom_plat']); ?></td>
                                     <td class="border p-2 text-center"><?= htmlspecialchars($vente['nbre_plat']); ?></td>
-                                    <td class="border p-2 text-center flex justify-center gap-4">
+                                    <td class="bg-[#FBEA92] #border p-2 text-center flex justify-center gap-4">
                                         <?php if ($_SESSION['role_user'] == 'admin'): ?>
                                             <a href="#" id="openEditVenteModal_<?= htmlspecialchars($vente['id']); ?>"
                                                 data-quantite="<?= htmlspecialchars($vente['nbre_plat']); ?>"
