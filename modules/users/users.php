@@ -233,18 +233,29 @@ try {
                             <input type="text" id="prenom_user_edit" name="prenom_user_edit" placeholder="Prenom"
                                 class="w-full p-2 border border-gray-300 rounded mt-2" required>
                         </div>
-                        <div class="mb-2">
-                            <label for="role_user_edit" class="block text-gray-700">Rôle</label>
-                            <select id="role_user_edit" name="role_user_edit"
-                                class="w-full p-2 border border-gray-300 rounded mt-2">
-                                <option value="admin">Admin</option>
-                                <option value="user">Utilisateur</option>
-                            </select>
+                        <div class="flex justify-between items-center mb-2 gap-4">
+                            <div class="mb-2">
+                                <label for="role_user_edit" class="block text-gray-700">Rôle</label>
+                                <select id="role_user_edit" name="role_user_edit"
+                                    class="w-full p-2 border border-gray-300 rounded mt-2">
+                                    <option value="admin">Admin</option>
+                                    <option value="user">Utilisateur</option>
+                                </select>
+                            </div>
+                            <div class="mb-2">
+                                <label for="statut_user" class="block text-gray-700">Statut</label>
+                                <select id="statut_user" name="statut_user"
+                                    class="w-full p-2 border border-gray-300 rounded mt-2">
+                                    <option value="admin">Activé (e)</option>
+                                    <option value="user">Désactivé (e)</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="mb-2">
                             <label for="password_user" class="block text-gray-700">Mot de passe</label>
                             <input type="password" id="password_user_edit" name="password_user_edit"
-                                placeholder="Saisir le nouveau mot de passe..." class="w-full p-2 border border-gray-300 rounded mt-2">
+                                placeholder="Saisir le nouveau mot de passe..."
+                                class="w-full p-2 border border-gray-300 rounded mt-2">
                         </div>
 
                         <div class="flex justify-end">
