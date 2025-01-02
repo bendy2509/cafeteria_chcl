@@ -101,40 +101,46 @@ try {
                                     <td class="bg-[#FBEA92] border p-2"><?= htmlspecialchars($user['pseudo_user']); ?></td>
                                     <td class="border p-2"><?= htmlspecialchars($user['nom_user']); ?></td>
                                     <td class="border p-2"><?= htmlspecialchars($user['role_user']); ?></td>
-                                    <td class="bg-[#FBEA92] border p-2 text-center flex justify-center gap-4">
-                                        <?php if ($user['id'] == $_SESSION['id']): ?>
-                                            <!-- Activer le bouton Modifier pour l'utilisateur connecté -->
-                                            <a href="#"
-                                                class="text-blue-500 hover:text-blue-700 px-3 py-1 rounded-md border border-white hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                                                id="openEditUserModal_<?= htmlspecialchars($user['id']); ?>"
-                                                data-id="<?= htmlspecialchars($user['id']); ?>"
-                                                data-nom="<?= htmlspecialchars($user['nom_user']); ?>"
-                                                data-role="<?= htmlspecialchars($user['role_user']); ?>"
-                                                data-prenom="<?= htmlspecialchars($user['prenom_user']); ?>"
-                                                data-title="Modifier vos informations">Modifier</a>
-                                            <!-- Désactiver uniquement le bouton Supprimer -->
-                                            <button
-                                                class="text-gray-400 bg-gray-200 px-3 py-1 rounded-md border border-white cursor-not-allowed"
-                                                disabled aria-disabled="true"
-                                                title="Vous ne pouvez pas vous supprimer vous-même">Supprimer</button>
+                                    <td class="border p-2 text-center flex justify-center gap-4">
+                                        <?php if ($_SESSION['role_user'] == 'admin'): ?>
+                                            <?php if ($user['id'] == $_SESSION['id']): ?>
+                                                <!-- Activer le bouton Modifier pour l'utilisateur connecte -->
+                                                <a href="#"
+                                                    class="text-blue-500 hover:text-blue-700 px-3 py-1 rounded-md border border-blue-500 hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                                    id="openEditUserModal_<?= htmlspecialchars($user['id']); ?>"
+                                                    data-id="<?= htmlspecialchars($user['id']); ?>"
+                                                    data-nom="<?= htmlspecialchars($user['nom_user']); ?>"
+                                                    data-role="<?= htmlspecialchars($user['role_user']); ?>"
+                                                    data-prenom="<?= htmlspecialchars($user['prenom_user']); ?>"
+                                                    data-title="Modifier vos informations">Modifier</a>
+                                                <!-- Desactiver le bouton Supprimer -->
+                                                <button
+                                                    class="text-gray-400 bg-gray-200 px-3 py-1 rounded-md border border-gray-300 cursor-not-allowed"
+                                                    disabled aria-disabled="true"
+                                                    title="Vous ne pouvez pas vous supprimer vous-même">Supprimer</button>
+                                            <?php else: ?>
+                                                <!-- Boutons actifs pour les autres utilisateurs -->
+                                                <a href="#"
+                                                    class="text-blue-500 hover:text-blue-700 px-3 py-1 rounded-md border border-blue-500 hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                                    id="openEditUserModal_<?= htmlspecialchars($user['id']); ?>"
+                                                    data-id="<?= htmlspecialchars($user['id']); ?>"
+                                                    data-nom="<?= htmlspecialchars($user['nom_user']); ?>"
+                                                    data-role="<?= htmlspecialchars($user['role_user']); ?>"
+                                                    data-prenom="<?= htmlspecialchars($user['prenom_user']); ?>"
+                                                    data-title="Modifier l'utilisateur <?= htmlspecialchars($user['pseudo_user']); ?>">Modifier</a>
+                                                <a href="./delete_user.php?id=<?= htmlspecialchars($user['id']); ?>"
+                                                    class="text-red-500 hover:text-red-700 px-3 py-1 rounded-md border border-red-500 hover:border-red-700 focus:outline-none focus:ring-2 focus:ring-red-300"
+                                                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')"
+                                                    title="Supprimer l'utilisateur <?= htmlspecialchars($user['pseudo_user']); ?>">Supprimer</a>
+                                            <?php endif; ?>
                                         <?php else: ?>
-                                            <!-- Boutons actifs pour les autres utilisateurs -->
-                                            <a href="#"
-                                                class="text-blue-500 hover:text-blue-700 px-3 py-1 rounded-md border border-white hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                                                id="openEditUserModal_<?= htmlspecialchars($user['id']); ?>"
-                                                data-id="<?= htmlspecialchars($user['id']); ?>"
-                                                data-nom="<?= htmlspecialchars($user['nom_user']); ?>"
-                                                data-role="<?= htmlspecialchars($user['role_user']); ?>"
-                                                data-prenom="<?= htmlspecialchars($user['prenom_user']); ?>"
-                                                data-title="Modifier l'utilisateur <?= htmlspecialchars($user['pseudo_user']); ?>">Modifier</a>
-                                            <a href="./delete_user.php?id=<?= htmlspecialchars($user['id']); ?>"
-                                                class="text-red-500 hover:text-red-700 px-3 py-1 rounded-md border border-white hover:border-red-700 focus:outline-none focus:ring-2 focus:ring-red-300"
-                                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')"
-                                                title="Supprimer l'utilisateur <?= htmlspecialchars($user['pseudo_user']); ?>">Supprimer</a>
+                                            <!-- Si l'utilisateur n'est pas admin, les boutons ne sont pas affiches -->
+                                            <span class="text-gray-400">Aucune action autorisée</span>
                                         <?php endif; ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
+
                         <?php endif; ?>
                     </tbody>
                 </table>
@@ -149,27 +155,30 @@ try {
                     <h3 class="text-2xl font-bold text-blue-800 mb-2 mt-0 pt-0">Ajouter un utilisateur</h3>
 
                     <!-- Formulaire d'ajout d'utilisateur -->
-                    <form action="add_user.php" method="POST" class="bg-[#fcb] p-2 rounded-lg">
-                        <div class="mb-1">
-                            <label for="nom_user" class="block text-gray-700">Nom</label>
-                            <input type="text" id="nom_user" name="nom_user" placeholder="Nom"
-                                class="w-full p-2 border border-gray-300 rounded mt-2" required>
+                    <form action="add_user.php" method="POST">
+                        <div class="flex justify-center items-center gap-6">
+                            <div class="mb-2">
+                                <label for="nom_user" class="block text-gray-700">Nom</label>
+                                <input type="text" id="nom_user" name="nom_user" placeholder="Nom"
+                                    class="w-full p-2 border border-gray-300 rounded mt-2" required>
+                            </div>
+                            <div class="mb-2">
+                                <label for="prenom_user" class="block text-gray-700">Prenom</label>
+                                <input type="text" id="prenom_user" name="prenom_user" placeholder="Prenom"
+                                    class="w-full p-2 border border-gray-300 rounded mt-2" required>
+                            </div>
                         </div>
-                        <div class="mb-1">
-                            <label for="prenom_user" class="block text-gray-700">Prenom</label>
-                            <input type="text" id="prenom_user" name="prenom_user" placeholder="Prenom"
-                                class="w-full p-2 border border-gray-300 rounded mt-2" required>
-                        </div>
-
-                        <div class="mb-1">
-                            <label for="pseudo_user" class="block text-gray-700">Pseudo</label>
-                            <input type="text" id="pseudo_user" name="pseudo_user" placeholder="Pseudo"
-                                class="w-full p-2 border border-gray-300 rounded mt-2" required>
-                        </div>
-                        <div class="mb-1">
-                            <label for="email_user" class="block text-gray-700">Email</label>
-                            <input type="email" id="email_user" name="email_user" placeholder="Email"
-                                class="w-full p-2 border border-gray-300 rounded mt-2" required>
+                        <div class="flex justify-center items-center gap-6">
+                            <div class="mb-2">
+                                <label for="pseudo_user" class="block text-gray-700">Pseudo</label>
+                                <input type="text" id="pseudo_user" name="pseudo_user" placeholder="Pseudo"
+                                    class="w-full p-2 border border-gray-300 rounded mt-2" required>
+                            </div>
+                            <div class="mb-2">
+                                <label for="email_user" class="block text-gray-700">Email</label>
+                                <input type="email" id="email_user" name="email_user" placeholder="Email"
+                                    class="w-full p-2 border border-gray-300 rounded mt-2" required>
+                            </div>
                         </div>
 
                         <div class="mb-1">
@@ -180,9 +189,14 @@ try {
                                 <option value="user">Utilisateur</option>
                             </select>
                         </div>
-                        <div class="mb-1">
-                            <label for="password_user" class="block text-gray-700">Password</label>
+                        <div class="mb-2">
+                            <label for="password_user" class="block text-gray-700">Mot de passe</label>
                             <input type="password" id="password_user" name="password_user" placeholder="Password"
+                                class="w-full p-2 border border-gray-300 rounded mt-2" required>
+                        </div>
+                        <div class="mb-2">
+                            <label for="password_user1" class="block text-gray-700">Confirmer le mot de passe</label>
+                            <input type="password" id="password_user1" name="password_user1" placeholder="Password"
                                 class="w-full p-2 border border-gray-300 rounded mt-2" required>
                         </div>
 
@@ -196,6 +210,8 @@ try {
                 </div>
             </div>
         </section>
+
+        <!-- Modal pour modifier un utilisateur -->
         <section>
             <!-- Modal de modification -->
             <div id="editUserModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
@@ -226,9 +242,9 @@ try {
                             </select>
                         </div>
                         <div class="mb-2">
-                            <label for="password_user" class="block text-gray-700">Password</label>
+                            <label for="password_user" class="block text-gray-700">Mot de passe</label>
                             <input type="password" id="password_user_edit" name="password_user_edit"
-                                placeholder="Password" class="w-full p-2 border border-gray-300 rounded mt-2">
+                                placeholder="Saisir le nouveau mot de passe..." class="w-full p-2 border border-gray-300 rounded mt-2">
                         </div>
 
                         <div class="flex justify-end">

@@ -96,21 +96,30 @@ if (!isset($_SESSION['id'])) {
                                     <td class="border p-2"><?= htmlspecialchars($client['nom_client']); ?></td>
                                     <td class="border p-2"><?= htmlspecialchars($client['type_client']); ?></td>
                                     <td class="border p-2"><?= htmlspecialchars($client['phone_client']); ?></td>
-                                    <td class="bg-[#FBEA92] border p-2 text-center flex justify-center gap-4">
-                                        <a href="#"
-                                            class="text-blue-500 hover:text-blue-700 px-3 py-1 rounded-md border border-white hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                                            id="openEditClientModal_<?= htmlspecialchars($client['id']); ?>"
-                                            data-id="<?= htmlspecialchars($client['id']); ?>"
-                                            data-nom="<?= htmlspecialchars($client['nom_client']); ?>"
-                                            data-type="<?= htmlspecialchars($client['type_client']); ?>"
-                                            data-phone="<?= htmlspecialchars($client['phone_client']); ?>"
-                                            data-title="Modifier le client <?= htmlspecialchars($client['code_client']); ?>">Modifier</a>
-                                        <a href="./delete_client.php?code_client=<?= htmlspecialchars($client['code_client']); ?>"
-                                            class="text-red-500 hover:text-red-700 px-3 py-1 rounded-md border border-white hover:border-red-700 focus:outline-none focus:ring-2 focus:ring-red-300"
-                                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce client ?')">Supprimer</a>
+                                    <td class="border p-2 text-center flex justify-center gap-4">
+                                        <?php if ($_SESSION['role_user'] == 'admin'): ?>
+                                            <a href="#"
+                                                class="text-blue-500 hover:text-blue-700 px-3 py-1 rounded-md border border-blue-500 hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                                id="openEditClientModal_<?= htmlspecialchars($client['id']); ?>"
+                                                data-id="<?= htmlspecialchars($client['id']); ?>"
+                                                data-nom="<?= htmlspecialchars($client['nom_client']); ?>"
+                                                data-type="<?= htmlspecialchars($client['type_client']); ?>"
+                                                data-phone="<?= htmlspecialchars($client['phone_client']); ?>"
+                                                title="Modifier le client <?= htmlspecialchars($client['nom_client']); ?>">Modifier</a>
+
+                                            <a href="./delete_client.php?code_client=<?= htmlspecialchars($client['code_client']); ?>"
+                                                class="text-red-500 hover:text-red-700 px-3 py-1 rounded-md border border-red-500 hover:border-red-700 focus:outline-none focus:ring-2 focus:ring-red-300"
+                                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce client ?')"
+                                                title="Supprimer le client <?= htmlspecialchars($client['nom_client']); ?>">Supprimer</a>
+
+                                        <?php else: ?>
+                                            <!-- Si l'utilisateur n'est pas admin, les boutons ne sont pas affichés -->
+                                            <span class="text-gray-400">Aucune action autorisée</span>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
+
                         <?php endif; ?>
                     </tbody>
                 </table>
@@ -218,7 +227,7 @@ if (!isset($_SESSION['id'])) {
                     const clientPhone = button.getAttribute("data-phone");
 
                     //Recuperer le titre du modal
-                    const modalTitle =button.getAttribute("data-title");
+                    const modalTitle = button.getAttribute("data-title");
 
                     // Pré-remplir les champs du formulaire
                     document.getElementById("nom_client_edit").value = clientNom || "";

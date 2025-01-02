@@ -1,5 +1,5 @@
 <?php
-$base_url = 'http://localhost/cafeteria_chcl/';
+$base_url = 'http://localhost/cafeteria/';
 ?>
 <aside class="w-72 bg-[#CA6207] text-white flex flex-col min-h-screen shadow-md rounded-lg overflow-hidden">
     <!-- Logo / Titre -->
@@ -11,13 +11,15 @@ $base_url = 'http://localhost/cafeteria_chcl/';
     <nav class="flex-grow">
         <ul class="mt-6 space-y-2">
             <!-- Dashboard -->
-            <li>
-                <a href="<?php echo $base_url; ?>index.php"
-                    class="flex items-center px-5 py-3 font-semibold text-lg hover:bg-[#fcb126] hover:text-white rounded transition-all duration-300">
-                    <ion-icon name="home-outline" class="mr-3 text-2xl"></ion-icon>
-                    Dashboard
-                </a>
-            </li>
+            <?php if (isset($_SESSION['role_user']) && $_SESSION['role_user'] === 'admin') : ?>
+                        <li>
+                            <a href="<?php echo $base_url; ?>index.php"
+                                class="flex items-center px-5 py-3 font-semibold text-lg hover:bg-[#fcb126] hover:text-white rounded transition-all duration-300">
+                                <ion-icon name="home-outline" class="mr-3 text-2xl"></ion-icon>
+                                Dashboard
+                            </a>
+                        </li>
+            <?php endif; ?>
             <!-- Clients -->
             <li>
                 <a href="<?php echo $base_url; ?>modules/clients/clients.php"
@@ -43,13 +45,15 @@ $base_url = 'http://localhost/cafeteria_chcl/';
                 </a>
             </li>
             <!-- Users -->
-            <li>
-                <a href="<?php echo $base_url; ?>modules/users/users.php"
-                    class="flex items-center px-5 py-3 font-semibold text-lg hover:bg-[#fcb126] hover:text-white rounded transition-all duration-300">
-                    <ion-icon name="people-circle-outline" class="mr-3 text-2xl"></ion-icon>
-                    Users
-                </a>
-            </li>
+            <?php if (isset($_SESSION['role_user']) && $_SESSION['role_user'] === 'admin') : ?>
+                        <li>
+                            <a href="<?php echo $base_url; ?>modules/users/users.php"
+                                class="flex items-center px-5 py-3 font-semibold text-lg hover:bg-[#fcb126] hover:text-white rounded transition-all duration-300">
+                                <ion-icon name="people-circle-outline" class="mr-3 text-2xl"></ion-icon>
+                                Users
+                            </a>
+                        </li>
+            <?php endif; ?>
             <!-- Déconnexion -->
             <li class="mt-8">
                 <a href="<?php echo $base_url; ?>logout.php"
@@ -62,7 +66,7 @@ $base_url = 'http://localhost/cafeteria_chcl/';
     </nav>
 
     <!-- Profil utilisateur -->
-    <div class="bg-[rgba(26,39,217,0.91)] py-4">
+    <div class="bg-[#15616D] py-4">
         <div class="text-center">
             <ion-icon name="person-circle-outline" class="text-4xl mb-2"></ion-icon>
             <div class="font-semibold text-lg">
@@ -79,7 +83,7 @@ $base_url = 'http://localhost/cafeteria_chcl/';
     </div>
 
     <!-- Footer -->
-    <footer class="text-center py-4 bg-blue-800 text-blue-400 text-sm">
+    <footer class="text-center py-4 bg-[#15616D] text-blue-400 text-sm">
         &copy; 2024 Cafeteria CHCL
     </footer>
 </aside>

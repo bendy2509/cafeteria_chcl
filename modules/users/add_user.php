@@ -8,6 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pseudo_user = trim($_POST['pseudo_user']);
     $email_user = trim($_POST['email_user']);
     $password_user = trim($_POST['password_user']);
+    $password_user_confirm = trim($_POST['password_user1']);
 
     $errors = [];
 
@@ -19,6 +20,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validation de l'email
     if (!filter_var($email_user, FILTER_VALIDATE_EMAIL)) {
         $errors[] = "L'email est incorrect.";
+    }
+
+    // Validation du mot de passe
+    if ($password_user !== $password_user_confirm) {
+        $errors[] = "Les mots de passe ne correspondent pas.";
     }
 
     if (empty($errors)) {

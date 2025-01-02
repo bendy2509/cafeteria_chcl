@@ -28,6 +28,12 @@ if (!isset($_SESSION['id'])) {
     header("Location: login.php");
     exit;
 }
+
+//Verifier que c'est un admin
+if ($_SESSION['role_user'] !== 'admin') {
+    header("Location: ./modules/ventes/ventes.php");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -49,7 +55,7 @@ if (!isset($_SESSION['id'])) {
     <!-- Zone principale -->
     <main class="flex-grow p-6 min-h-screen relative">
         <!-- En-tête -->
-        <header class=" shadow p-6 rounded-lg text-center mb-6">
+        <header class="shadow p-6 rounded-lg text-center mb-6">
             <h1 class="text-4xl font-extrabold text-blue-800">CAFETERIA DU CHCL</h1>
             <p class="text-gray-500 text-sm mt-2">Bienvenue sur votre tableau de bord</p>
         </header>
@@ -87,22 +93,22 @@ if (!isset($_SESSION['id'])) {
         </section>
 
         <section>
-            <!-- Modal (masqué par défaut) -->
+            <!-- Modal  -->
             <div id="modal"
                 class="fixed inset-0 bg-gray-800 bg-opacity-50 items-center justify-center hidden">
                 <div class="bg-white rounded-lg shadow-lg p-6 w-[400px]">
                     <h2 class="text-xl font-bold mb-4 text-gray-800">Sélectionner les dates</h2>
-                    <form id="dateForm" class="space-y-4">
+                    <form id="dateForm" class="space-y-4" method="POST" action="generateRapport/rapport.php">
                         <!-- Champ Date Début -->
                         <div>
-                            <label for="startDate" class="block text-sm font-medium text-gray-700">Date Début</label>
-                            <input type="date" id="startDate" name="startDate"
+                            <label for="date_debut" class="block text-sm font-medium text-gray-700">Date Début</label>
+                            <input type="date" id="date_debut" name="date_debut"
                                 class="w-full px-3 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500">
                         </div>
                         <!-- Champ Date de Fin -->
                         <div>
-                            <label for="endDate" class="block text-sm font-medium text-gray-700">Date de Fin</label>
-                            <input type="date" id="endDate" name="endDate"
+                            <label for="date_fin" class="block text-sm font-medium text-gray-700">Date de Fin</label>
+                            <input type="date" id="date_fin" name="date_fin"
                                 class="w-full px-3 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500">
                         </div>
                         <!-- Boutons -->

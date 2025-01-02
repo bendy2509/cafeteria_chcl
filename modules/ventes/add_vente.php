@@ -31,6 +31,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($stmt->fetchColumn() > 0) {
                 $errors[] = "Une vente a déjà été effectuée pour ce client aujourd'hui.";
             } else {
+                //Verifier si le nombre de plat est insuffisant
+                $stmt = $pdo->prepare("
+                    SELECT nbre_plat FROM plats WHERE code_plat = :code_plat
+                ");
+                $stmt->execute([
+                    ':code_plat' => $code_plat
+                ]);
+                $quantite = $stmt->fetchColumn();
+                if ($quantite < $nbre_plat) {
+                    $errors[] = "Le nombre de plats est insuffisant.";
+                    $_SESSION['errors'] = $errors;
+                    header("Location: ./ventes.php");
+                    exit;
+                }
+
+                // Diminuer le stock du plat
+                $stmt = $pdo->prepare("
+                    UPDATE plats SET quantite_plat = quantite_plat - :nbre_plat
+                    WHERE code_plat = :code_plat
+                ");
+                $stmt->execute([
+                    ':nbre_plat' => $nbre_plat,
+                    ':code_plat' => $code_plat
+                ]);
+
                 // Insérer la nouvelle vente dans la base de données
                 $stmt = $pdo->prepare("
                     INSERT INTO ventes (code_plat, code_client, nbre_plat)
@@ -42,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ':nbre_plat' => $nbre_plat
                 ]);
 
-                // Ajout un message dans la session
+                // Ajouter un message dans la session
                 $_SESSION['success'] = "Vente ajoutée avec succès.";
                 // Redirection après succès
                 header("Location: ./ventes.php");
