@@ -101,7 +101,7 @@ try {
                                     <td class="bg-[#FBEA92] border p-2"><?= htmlspecialchars($user['pseudo_user']); ?></td>
                                     <td class="border p-2"><?= htmlspecialchars($user['nom_user']); ?></td>
                                     <td class="border p-2"><?= htmlspecialchars($user['role_user']); ?></td>
-                                    <td class="border p-2 text-center flex justify-center gap-4">
+                                    <td class="bg-[#FBEA92] border p-2 text-center flex justify-center gap-4">
                                         <?php if ($_SESSION['role_user'] == 'admin'): ?>
                                             <?php if ($user['id'] == $_SESSION['id']): ?>
                                                 <!-- Activer le bouton Modifier pour l'utilisateur connecte -->
@@ -155,7 +155,7 @@ try {
                     <h3 class="text-2xl font-bold text-blue-800 mb-2 mt-0 pt-0">Ajouter un utilisateur</h3>
 
                     <!-- Formulaire d'ajout d'utilisateur -->
-                    <form action="add_user.php" method="POST">
+                    <form action="add_user.php" method="POST" class="bg-[#FBEA92] p-2 rounded-lg">
                         <div class="flex justify-center items-center gap-6">
                             <div class="mb-2">
                                 <label for="nom_user" class="block text-gray-700">Nom</label>
@@ -219,7 +219,7 @@ try {
                     <h3 class="text-2xl font-bold text-blue-800 mb-4">Modifier Utilisateur</h3>
 
                     <!-- Formulaire de modification d'utilisateur -->
-                    <form action="update_user.php" method="POST" class="bg-[#fcb] p-2 rounded-lg">
+                    <form action="update_user.php" method="POST" class="bg-[#FBEA92] p-2 rounded-lg">
                         <!-- Champs cachés pour passer l'ID de l'utilisateur -->
                         <input type="hidden" id="id_user_edit" name="id_user">
 

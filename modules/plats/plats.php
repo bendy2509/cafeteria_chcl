@@ -145,7 +145,7 @@ if (!isset($_SESSION['id'])) {
                     <h3 class="text-2xl font-bold text-blue-800 mb-4">Ajouter un plat</h3>
 
                     <!-- Formulaire d'ajout de plat -->
-                    <form action="./ajouter_plat.php" method="POST" class="space-y-4 bg-[#fcb] p-4 rounded-lg">
+                    <form action="./ajouter_plat.php" method="POST" class="space-y-4 bg-[#FBEA92] p-4 rounded-lg">
                         <div class="mb-2">
                             <label for="nom_plat" class="block text-gray-700">Nom du plat</label>
                             <input type="text" id="nom_plat" name="nom_plat" placeholder="Nom du plat"
@@ -190,7 +190,7 @@ if (!isset($_SESSION['id'])) {
                     <h3 class="text-2xl font-bold text-blue-800 mb-4">Modifier Plat</h3>
 
                     <!-- Formulaire de modification plat -->
-                    <form action="update_plat.php" method="POST" class="space-y-4 bg-[#fcb] p-4 rounded-lg">
+                    <form action="update_plat.php" method="POST" class="space-y-4 bg-[#FBEA92] p-4 rounded-lg">
                         <!-- Champs cachés pour passer le code plat -->
                         <input type="hidden" id="id_plat_edit" name="id_plat">
 
