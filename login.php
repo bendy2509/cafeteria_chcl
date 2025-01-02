@@ -11,21 +11,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "Tous les champs sont obligatoires.";
     } else {
         $stmt = $pdo->prepare("SELECT id, pseudo_user, email_user, password_user, nom_user, prenom_user, 
-                               role_user FROM users 
+                               role_user, statut FROM users 
                                WHERE pseudo_user = :username OR email_user = :username");
         $stmt->execute([':username' => $username]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user && password_verify($password, $user['password_user'])) {
-            session_regenerate_id(true);
-            $_SESSION['id'] = $user['id'];
-            $_SESSION['pseudo_user'] = $user['pseudo_user'];
-            $_SESSION['nom_user'] = $user['nom_user'];
-            $_SESSION['prenom_user'] = $user['prenom_user'];
-            $_SESSION['role_user'] = $user['role_user'];
+            //Verifier si le statut du user est 1
+            if ($user['statut'] == 0) {
+                $errors[] = "Votre compte a été désactivé. Veuillez contacter l'administrateur.";
+            } else {
+                session_regenerate_id(true);
+                $_SESSION['id'] = $user['id'];
+                $_SESSION['pseudo_user'] = $user['pseudo_user'];
+                $_SESSION['nom_user'] = $user['nom_user'];
+                $_SESSION['prenom_user'] = $user['prenom_user'];
+                $_SESSION['role_user'] = $user['role_user'];
 
-            header("Location: ./index.php", true, 303);
-            exit();
+                if ($user['role_user'] === 'admin') {
+                    header("Location: ./index.php", true, 303);
+                } else {
+                    header("Location: ./modules/ventes/ventes.php", true, 303);
+                }
+                exit();
+            }
         } else {
             $errors[] = "Pseudo/Email ou mot de passe incorrect.";
         }

@@ -99,7 +99,7 @@ if (!isset($_SESSION['id'])) {
                                             <a href="#" id="openEditVenteModal_<?= htmlspecialchars($vente['id']); ?>"
                                                 data-quantite="<?= htmlspecialchars($vente['nbre_plat']); ?>"
                                                 data-id="<?= htmlspecialchars($vente['id']); ?>"
-                                                class="text-blue-500 hover:text-blue-700 px-3 py-1 rounded-md border"
+                                                class="text-blue-500 hover:text-blue-700 px-3 py-1 rounded-md border border-blue-500 hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
                                                 title="Modifier la vente n°<?= htmlspecialchars($vente['id']); ?>">
                                                 Modifier
                                             </a>
@@ -127,7 +127,8 @@ if (!isset($_SESSION['id'])) {
 
         <!-- Modal d'ajout de vente -->
         <section>
-            <div id="modal" class="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 hidden">
+            <div id="modal"
+                class="fixed inset-0 w-full h-full bg-gray-900 bg-opacity-50 hidden items-center justify-center">
                 <div class="w-full max-w-md p-6 m-auto rounded-lg shadow-lg relative bg-[#fcb126]">
                     <h2 class="text-2xl font-bold mb-4 text-white">Ajouter une vente</h2>
                     <form action="./add_vente.php" method="POST" class="space-y-4 bg-orange-100 p-4 rounded-lg">
@@ -243,29 +244,38 @@ if (!isset($_SESSION['id'])) {
         // Ouvrir le modal de la modification de vente
         const openEditModals = document.querySelectorAll('[id^="openEditVenteModal_"]');
         openEditModals.forEach(openEditModal => {
-            openEditModal.addEventListener('click', function() {
+            openEditModal.addEventListener('click', function () {
                 const modalEdit = document.getElementById('modalEdit');
                 const id = this.getAttribute('data-id');
                 const quantite = this.getAttribute('data-quantite');
 
                 modalEdit.querySelector('#nbre_plat').value = quantite;
                 modalEdit.querySelector('#id').value = id;
+                //Enlever la classe 'hidden' pour afficher le modal
                 modalEdit.classList.remove('hidden');
+                //Ajouter la classe 'flex' pour centrer le modal
+                modalEdit.classList.add('flex');
+
             });
         });
 
         // Fermer le modal de modification de vente
         const closeEditModal = document.getElementById('closeEditModal');
-        closeEditModal.addEventListener('click', function() {
+        closeEditModal.addEventListener('click', function () {
             const modalEdit = document.getElementById('modalEdit');
             modalEdit.classList.add('hidden');
+            // Retirer la classe 'flex' pour centrer le modal
+            modalEdit.classList.remove('flex');
         });
 
         // si il clic en dehors du modal, le modal se ferme
-        window.addEventListener('click', function(event) {
+        window.addEventListener('click', function (event) {
             const modalEdit = document.getElementById('modalEdit');
             if (event.target === modalEdit) {
                 modalEdit.classList.add('hidden');
+
+                // Retirer la classe 'flex' pour centrer le modal
+                modalEdit.classList.remove('flex');
             }
         });
     </script>

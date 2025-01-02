@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 //Verifier si le nombre de plat est insuffisant
                 $stmt = $pdo->prepare("
-                    SELECT quantite_plat FROM plats WHERE code_plat = :code_plat
+                    SELECT nbre_plat FROM plats WHERE code_plat = :code_plat
                 ");
                 $stmt->execute([
                     ':code_plat' => $code_plat
@@ -68,7 +68,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ]);
 
                 // Ajouter un message dans la session
-                // Ajout un message dans la session
                 $_SESSION['success'] = "Vente ajoutée avec succès.";
                 // Redirection après succès
                 header("Location: ./ventes.php");

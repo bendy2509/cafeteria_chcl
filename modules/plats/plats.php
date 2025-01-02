@@ -67,10 +67,12 @@ if (!isset($_SESSION['id'])) {
             ?>
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-bold">Liste des plats</h2>
-                <!-- Bouton d'ouverture du modal -->
-                <a href="#" id="openModal" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                    <ion-icon name="add-circle-outline" class="align-middle"></ion-icon> Ajouter un plat
-                </a>
+                <!-- Bouton pour ajouter un plat -->
+                <?php if ($_SESSION['role_user'] == 'admin'): ?>
+                    <a href="#" id="openModal" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        <ion-icon name="add-circle-outline" class="align-middle"></ion-icon> Ajouter un plat
+                    </a>
+                <?php endif; ?>
             </div>
 
             <div class="overflow-x-auto">

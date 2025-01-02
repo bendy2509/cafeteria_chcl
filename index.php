@@ -28,6 +28,12 @@ if (!isset($_SESSION['id'])) {
     header("Location: login.php");
     exit;
 }
+
+//Verifier que c'est un admin
+if ($_SESSION['role_user'] !== 'admin') {
+    header("Location: ./modules/ventes/ventes.php");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">

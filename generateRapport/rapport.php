@@ -42,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         ?>
         <html>
+
         <head>
             <title>Rapport des Ventes</title>
             <style>
@@ -51,112 +52,82 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     line-height: 1.6;
                     color: #2d3748;
                 }
+
                 table {
                     width: 100%;
                     border-collapse: collapse;
                     margin-top: 20px;
                 }
-                th, td {
+
+                th,
+                td {
                     padding: 12px;
                     text-align: left;
                     border: 1px solid #e2e8f0;
                 }
+
                 th {
                     background-color: #edf2f7;
                 }
+
                 tr:nth-child(odd) {
                     background-color: #ffffff;
                 }
+
                 tr:nth-child(even) {
                     background-color: #f7fafc;
                 }
             </style>
         </head>
+
         <body>
             <h1>Rapport des Ventes du <?= htmlspecialchars($date_debut); ?> au <?= htmlspecialchars($date_fin); ?></h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Client</th>
-                        <th>Plat</th>
-                        <th>Nombre de Plats</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($ventes as $vente): ?>
+            <?php
+            // Vérifier s'il y a des ventes
+            if (empty($ventes)) {
+                echo "<p>Aucune vente trouvée pour la période sélectionnée.</p>";
+            } else {
+
+                ?>
+                <table>
+                    <thead>
                         <tr>
-                            <td><?= htmlspecialchars($vente['id']); ?></td>
-                            <td><?= htmlspecialchars($vente['nom_client']); ?></td>
-                            <td><?= htmlspecialchars($vente['nom_plat']); ?></td>
-                            <td><?= htmlspecialchars($vente['nbre_plat']); ?></td>
-                            <td><?= htmlspecialchars($vente['date_vente']); ?></td>
+                            <th>CODE</th>
+                            <th>Client</th>
+                            <th>Plat</th>
+                            <th>Nombre de Plats</th>
+                            <th>Date</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($ventes as $vente): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($vente['code_vente']); ?></td>
+                                <td><?= htmlspecialchars($vente['nom_client']); ?></td>
+                                <td><?= htmlspecialchars($vente['nom_plat']); ?></td>
+                                <td><?= htmlspecialchars($vente['nbre_plat']); ?></td>
+                                <td><?= htmlspecialchars($vente['date_vente']); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <?php
+            }
+            ?>
         </body>
+
         </html>
         <?php
         $html = ob_get_clean(); // Récupère le contenu tamponné
-        
+
         // Initialiser html2pdf
         try {
             $pdf = new \Spipu\Html2Pdf\Html2Pdf('P', 'A4', 'fr');
             $pdf->writeHTML($html);
-            $pdf->output('rapport_ventes.pdf');
+            $pdf->output("rapport_ventes_{$date_debut}_{$date_fin}.pdf");
         } catch (Html2PdfException $e) {
             echo $e;
         }
     }
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rapport des Ventes</title>
-    <style>
-        /* Styles pour l'affichage des résultats en HTML */
-    </style>
-</head>
-
-<body>
-    <div class="container">
-        
-        <?php if (isset($error)): ?>
-            <p class="text-center text-gray-500"><?= htmlspecialchars($error); ?></p>
-        <?php elseif (empty($ventes)): ?>
-            <p class="text-center text-gray-500">Aucune vente trouvée.</p>
-        <?php else: ?>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Client</th>
-                        <th>Plat</th>
-                        <th>Nombre de Plats</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($ventes as $vente): ?>
-                        <tr>
-                            <td><?= htmlspecialchars($vente['id']); ?></td>
-                            <td><?= htmlspecialchars($vente['nom_client']); ?></td>
-                            <td><?= htmlspecialchars($vente['nom_plat']); ?></td>
-                            <td><?= htmlspecialchars($vente['nbre_plat']); ?></td>
-                            <td><?= htmlspecialchars($vente['date_vente']); ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php endif; ?>
-    </div>
-</body>
-
-</html>

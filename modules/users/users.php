@@ -156,26 +156,29 @@ try {
 
                     <!-- Formulaire d'ajout d'utilisateur -->
                     <form action="add_user.php" method="POST">
-                        <div class="mb-2">
-                            <label for="nom_user" class="block text-gray-700">Nom</label>
-                            <input type="text" id="nom_user" name="nom_user" placeholder="Nom"
-                                class="w-full p-2 border border-gray-300 rounded mt-2" required>
+                        <div class="flex justify-center items-center gap-6">
+                            <div class="mb-2">
+                                <label for="nom_user" class="block text-gray-700">Nom</label>
+                                <input type="text" id="nom_user" name="nom_user" placeholder="Nom"
+                                    class="w-full p-2 border border-gray-300 rounded mt-2" required>
+                            </div>
+                            <div class="mb-2">
+                                <label for="prenom_user" class="block text-gray-700">Prenom</label>
+                                <input type="text" id="prenom_user" name="prenom_user" placeholder="Prenom"
+                                    class="w-full p-2 border border-gray-300 rounded mt-2" required>
+                            </div>
                         </div>
-                        <div class="mb-2">
-                            <label for="prenom_user" class="block text-gray-700">Prenom</label>
-                            <input type="text" id="prenom_user" name="prenom_user" placeholder="Prenom"
-                                class="w-full p-2 border border-gray-300 rounded mt-2" required>
-                        </div>
-
-                        <div class="mb-2">
-                            <label for="pseudo_user" class="block text-gray-700">Pseudo</label>
-                            <input type="text" id="pseudo_user" name="pseudo_user" placeholder="Pseudo"
-                                class="w-full p-2 border border-gray-300 rounded mt-2" required>
-                        </div>
-                        <div class="mb-2">
-                            <label for="email_user" class="block text-gray-700">Email</label>
-                            <input type="email" id="email_user" name="email_user" placeholder="Email"
-                                class="w-full p-2 border border-gray-300 rounded mt-2" required>
+                        <div class="flex justify-center items-center gap-6">
+                            <div class="mb-2">
+                                <label for="pseudo_user" class="block text-gray-700">Pseudo</label>
+                                <input type="text" id="pseudo_user" name="pseudo_user" placeholder="Pseudo"
+                                    class="w-full p-2 border border-gray-300 rounded mt-2" required>
+                            </div>
+                            <div class="mb-2">
+                                <label for="email_user" class="block text-gray-700">Email</label>
+                                <input type="email" id="email_user" name="email_user" placeholder="Email"
+                                    class="w-full p-2 border border-gray-300 rounded mt-2" required>
+                            </div>
                         </div>
 
                         <div class="mb-2">
@@ -187,8 +190,13 @@ try {
                             </select>
                         </div>
                         <div class="mb-2">
-                            <label for="password_user" class="block text-gray-700">Password</label>
+                            <label for="password_user" class="block text-gray-700">Mot de passe</label>
                             <input type="password" id="password_user" name="password_user" placeholder="Password"
+                                class="w-full p-2 border border-gray-300 rounded mt-2" required>
+                        </div>
+                        <div class="mb-2">
+                            <label for="password_user1" class="block text-gray-700">Confirmer le mot de passe</label>
+                            <input type="password" id="password_user1" name="password_user1" placeholder="Password"
                                 class="w-full p-2 border border-gray-300 rounded mt-2" required>
                         </div>
 
@@ -202,6 +210,8 @@ try {
                 </div>
             </div>
         </section>
+
+        <!-- Modal pour modifier un utilisateur -->
         <section>
             <!-- Modal de modification -->
             <div id="editUserModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
@@ -232,9 +242,9 @@ try {
                             </select>
                         </div>
                         <div class="mb-2">
-                            <label for="password_user" class="block text-gray-700">Password</label>
+                            <label for="password_user" class="block text-gray-700">Mot de passe</label>
                             <input type="password" id="password_user_edit" name="password_user_edit"
-                                placeholder="Password" class="w-full p-2 border border-gray-300 rounded mt-2">
+                                placeholder="Saisir le nouveau mot de passe..." class="w-full p-2 border border-gray-300 rounded mt-2">
                         </div>
 
                         <div class="flex justify-end">

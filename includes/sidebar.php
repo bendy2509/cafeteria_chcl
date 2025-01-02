@@ -11,13 +11,15 @@ $base_url = 'http://localhost/cafeteria/';
     <nav class="flex-grow">
         <ul class="mt-6 space-y-2">
             <!-- Dashboard -->
-            <li>
-                <a href="<?php echo $base_url; ?>index.php"
-                    class="flex items-center px-5 py-3 font-semibold text-lg hover:bg-[#fcb126] hover:text-white rounded transition-all duration-300">
-                    <ion-icon name="home-outline" class="mr-3 text-2xl"></ion-icon>
-                    Dashboard
-                </a>
-            </li>
+            <?php if (isset($_SESSION['role_user']) && $_SESSION['role_user'] === 'admin') : ?>
+                        <li>
+                            <a href="<?php echo $base_url; ?>index.php"
+                                class="flex items-center px-5 py-3 font-semibold text-lg hover:bg-[#fcb126] hover:text-white rounded transition-all duration-300">
+                                <ion-icon name="home-outline" class="mr-3 text-2xl"></ion-icon>
+                                Dashboard
+                            </a>
+                        </li>
+            <?php endif; ?>
             <!-- Clients -->
             <li>
                 <a href="<?php echo $base_url; ?>modules/clients/clients.php"
@@ -43,13 +45,15 @@ $base_url = 'http://localhost/cafeteria/';
                 </a>
             </li>
             <!-- Users -->
-            <li>
-                <a href="<?php echo $base_url; ?>modules/users/users.php"
-                    class="flex items-center px-5 py-3 font-semibold text-lg hover:bg-[#fcb126] hover:text-white rounded transition-all duration-300">
-                    <ion-icon name="people-circle-outline" class="mr-3 text-2xl"></ion-icon>
-                    Users
-                </a>
-            </li>
+            <?php if (isset($_SESSION['role_user']) && $_SESSION['role_user'] === 'admin') : ?>
+                        <li>
+                            <a href="<?php echo $base_url; ?>modules/users/users.php"
+                                class="flex items-center px-5 py-3 font-semibold text-lg hover:bg-[#fcb126] hover:text-white rounded transition-all duration-300">
+                                <ion-icon name="people-circle-outline" class="mr-3 text-2xl"></ion-icon>
+                                Users
+                            </a>
+                        </li>
+            <?php endif; ?>
             <!-- Déconnexion -->
             <li class="mt-8">
                 <a href="<?php echo $base_url; ?>logout.php"
