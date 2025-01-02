@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <tbody>
                         <?php foreach ($ventes as $vente): ?>
                             <tr>
-                                <td><?= htmlspecialchars($vente['code_vente']); ?></td>
+                                <td><?= htmlspecialchars($vente['id']); ?></td>
                                 <td><?= htmlspecialchars($vente['nom_client']); ?></td>
                                 <td><?= htmlspecialchars($vente['nom_plat']); ?></td>
                                 <td><?= htmlspecialchars($vente['nbre_plat']); ?></td>
