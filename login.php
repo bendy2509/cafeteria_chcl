@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body class="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-700 to-indigo-900">
-    <div class="bg-white shadow-lg rounded-lg w-full max-w-md p-8">
+    <div class="bg-[#fcb126] shadow-lg rounded-lg w-full max-w-md p-8">
         <div class="bg-gradient-to-r from-blue-500 to-blue-700 text-white text-center p-6 rounded-t-lg">
             <h1 class="text-3xl font-bold">Bienvenue</h1>
             <p class="text-sm">Connectez-vous pour accéder à votre compte</p>
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         ?>
 
-        <form action="login.php" method="POST" class="mt-6 space-y-4">
+        <form action="login.php" method="POST" class="mt-6 space-y-4 bg-[#fcb] p-4 rounded-lg">
             <div>
                 <label for="username" class="block text-sm font-medium text-gray-700">Pseudo ou Email</label>
                 <input type="text" id="username" name="username" placeholder="Entrez votre pseudo ou email"

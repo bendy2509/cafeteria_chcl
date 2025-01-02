@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body class="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-700 to-indigo-900">
-    <div class="bg-white shadow-lg rounded-lg w-full max-w-md p-8">
+    <div class="bg-[#fcb126] shadow-lg rounded-lg w-full max-w-md p-8">
         <div class="bg-gradient-to-r from-indigo-500 to-indigo-700 text-white text-center p-6 rounded-t-lg">
             <h1 class="text-3xl font-bold">Créer un compte</h1>
             <p class="text-sm">Inscrivez-vous pour commencer</p>
@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
 
         <!-- Formulaire -->
-        <form action="register.php" method="POST" class="mt-6 space-y-4">
+        <form action="register.php" method="POST" class="mt-6 space-y-4 bg-[#fcb] p-4 rounded-lg">
             <div>
                 <label for="username" class="block text-sm font-medium text-gray-700">Pseudo</label>
                 <input type="text" id="username" name="username" placeholder="Entrez votre pseudo"
