@@ -86,9 +86,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="./assets/css/styles.css">
 </head>
 
-<body class="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-700 to-indigo-900">
-    <div class="bg-white shadow-lg rounded-lg w-full max-w-md p-8">
-        <div class="bg-gradient-to-r from-indigo-500 to-indigo-700 text-white text-center p-6 rounded-t-lg">
+<body class="flex items-center justify-center min-h-screen bg-[#15616D]">
+    <div class="bg-[#fcb126] shadow-lg rounded-lg w-full max-w-md p-8">
+        <div class="bg-[#15616D] text-white text-center p-6 rounded-t-lg">
             <h1 class="text-3xl font-bold">Créer un compte</h1>
             <p class="text-sm">Inscrivez-vous pour commencer</p>
         </div>
@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
 
         <!-- Formulaire -->
-        <form action="register.php" method="POST" class="mt-6 space-y-4">
+        <form action="register.php" method="POST" class="mt-6 space-y-4 bg-[#FBEA92] p-4 rounded-lg">
             <div class="flex gap-4 w-full">
                 <!-- Ajouter un champ pour le prenom -->
                 <div>
@@ -150,7 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
             </div>
             <button type="submit"
-                class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 rounded-lg transition duration-200">
+                class="w-full bg-[#15616D] hover:bg-blue-600 text-white font-semibold py-2 rounded-lg transition duration-200">
                 S'inscrire
             </button>
         </form>

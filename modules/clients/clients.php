@@ -76,7 +76,7 @@ if (!isset($_SESSION['id'])) {
                 <table class="w-full border-collapse"
                     summary="Tableau affichant la liste des clients avec leurs coordonnées et actions disponibles">
                     <thead>
-                        <tr class="bg-gray-100 text-left">
+                        <tr class="bg-[#fcb126] text-left text-white">
                             <th scope="col" class="border p-2 text-center">CODE</th>
                             <th scope="col" class="border p-2 text-center">NOM</th>
                             <th scope="col" class="border p-2 text-center">TYPE</th>
@@ -92,11 +92,11 @@ if (!isset($_SESSION['id'])) {
                         <?php else: ?>
                             <?php foreach ($clients as $client): ?>
                                 <tr>
-                                    <td class="border p-2"><?= htmlspecialchars($client['code_client']); ?></td>
+                                    <td class="bg-[#FBEA92] border p-2"><?= htmlspecialchars($client['code_client']); ?></td>
                                     <td class="border p-2"><?= htmlspecialchars($client['nom_client']); ?></td>
                                     <td class="border p-2"><?= htmlspecialchars($client['type_client']); ?></td>
                                     <td class="border p-2"><?= htmlspecialchars($client['phone_client']); ?></td>
-                                    <td class="border p-2 text-center flex justify-center gap-4">
+                                    <td class="bg-[#FBEA92] border p-2 text-center flex justify-center gap-4">
                                         <?php if ($_SESSION['role_user'] == 'admin'): ?>
                                             <a href="#"
                                                 class="text-blue-500 hover:text-blue-700 px-3 py-1 rounded-md border border-blue-500 hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
@@ -129,11 +129,11 @@ if (!isset($_SESSION['id'])) {
         <!-- Modal pour ajouter un client -->
         <section>
             <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
-                <div class="bg-white rounded-lg w-1/3 p-6">
+                <div class="bg-[#fcb126] rounded-lg w-1/3 p-6">
                     <h3 class="text-2xl font-bold text-blue-800 mb-4">Ajouter un client</h3>
 
                     <!-- Formulaire d'ajout de client -->
-                    <form action="./ajouter_clients.php" method="POST">
+                    <form action="./ajouter_clients.php" method="POST" class="space-y-4 bg-[#FBEA92] p-4 rounded-lg">
                         <div class="mb-2">
                             <label for="nom_client" class="block text-gray-700">Nom</label>
                             <input type="text" id="nom_client" name="nom_client" placeholder="Nom"
@@ -170,11 +170,11 @@ if (!isset($_SESSION['id'])) {
         <section>
             <!-- Modal de modification -->
             <div id="editClientModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
-                <div class="bg-white rounded-lg w-1/3 p-6">
+                <div class="bg-[#fcb126] rounded-lg w-1/3 p-6">
                     <h3 class="text-2xl font-bold text-blue-800 mb-4">Modifier Client</h3>
 
                     <!-- Formulaire de modification client -->
-                    <form action="update_client.php" method="POST">
+                    <form action="update_client.php" method="POST" class="space-y-4 bg-[#FBEA92] p-4 rounded-lg">
                         <!-- Champs cachés pour passer le code client -->
                         <input type="hidden" id="id_client_edit" name="id_client">
 

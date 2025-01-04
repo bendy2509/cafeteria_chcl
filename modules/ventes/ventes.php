@@ -131,7 +131,7 @@ if (!isset($_SESSION['id'])) {
                 class="fixed inset-0 w-full h-full bg-gray-900 bg-opacity-50 hidden items-center justify-center">
                 <div class="w-full max-w-md p-6 m-auto rounded-lg shadow-lg relative bg-[#fcb126]">
                     <h2 class="text-2xl font-bold mb-4 text-white">Ajouter une vente</h2>
-                    <form action="./add_vente.php" method="POST" class="space-y-4 bg-orange-100 p-4 rounded-lg">
+                    <form action="./add_vente.php" method="POST" class="space-y-4 bg-[#FBEA92] p-4 rounded-lg">
                         <div>
                             <label for="client" class="block text-sm font-medium text-gray-700">Client</label>
                             <select name="client" id="client"
@@ -183,9 +183,9 @@ if (!isset($_SESSION['id'])) {
         <!-- Modal de modification de vente -->
         <section>
             <div id="modalEdit" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
-                <div class="w-full max-w-md p-6 m-auto bg-white rounded-lg shadow-lg relative">
+                <div class="w-full max-w-md p-6 m-auto bg-[#fcb126] rounded-lg shadow-lg relative">
                     <h2 class="text-2xl font-bold mb-4">Modifier une vente</h2>
-                    <form action="./update_vente.php" method="POST" class="space-y-4">
+                    <form action="./update_vente.php" method="POST" class="space-y-4 bg-[#FBEA92] p-4 rounded-lg">
                         <input type="hidden" name="id" id="id">
 
                         <div>
