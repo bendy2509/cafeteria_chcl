@@ -86,8 +86,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="./assets/css/styles.css">
 </head>
 
-<body class="flex items-center justify-center min-h-screen bg-[#15616D]">
-    <div class="bg-[#fcb126] shadow-lg rounded-lg w-full max-w-md p-8">
+<body class="flex items-center justify-center min-h-screen bg-[url('../images/background.jpg')] bg-cover bg-center bg-no-repeat">
+    <div class="bg-[#F57422] shadow-lg rounded-lg w-full max-w-md p-8">
         <div class="bg-[#15616D] text-white text-center p-6 rounded-t-lg">
             <h1 class="text-3xl font-bold">Créer un compte</h1>
             <p class="text-sm">Inscrivez-vous pour commencer</p>
@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
 
         <!-- Formulaire -->
-        <form action="register.php" method="POST" class="mt-6 space-y-4 bg-[#FBEA92] p-4 rounded-lg">
+        <form action="register.php" method="POST" class="mt-6 space-y-4 bg-[#FFC36B] p-4 rounded-lg">
             <div class="flex gap-4 w-full">
                 <!-- Ajouter un champ pour le prenom -->
                 <div>
@@ -156,8 +156,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
 
         <div class="text-center mt-6">
-            <p class="text-sm text-gray-500">Vous avez déjà un compte ? <a href="login.php"
-                    class="text-indigo-500 hover:underline">Connectez-vous</a></p>
+            <p class="text-sm text-white">Vous avez déjà un compte ? <a href="login.php"
+                    class="text-indigo-600 hover:underline">Connectez-vous</a></p>
         </div>
     </div>
 </body>
