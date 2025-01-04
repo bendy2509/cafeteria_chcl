@@ -1,10 +1,10 @@
 <?php
-$base_url = 'http://localhost/cafeteria/';
+$base_url = 'http://localhost/cafeteria_chcl/';
 ?>
 <aside class="w-72 bg-[#CA6207] text-white flex flex-col min-h-screen shadow-md rounded-lg overflow-hidden">
     <!-- Logo / Titre -->
     <div class="bg-[#fcb126] p-6 text-center font-extrabold text-2xl tracking-wide uppercase">
-        Cafeteria
+        CAFETERIA CHCL
     </div>
 
     <!-- Navigation -->
@@ -16,7 +16,7 @@ $base_url = 'http://localhost/cafeteria/';
                             <a href="<?php echo $base_url; ?>index.php"
                                 class="flex items-center px-5 py-3 font-semibold text-lg hover:bg-[#fcb126] hover:text-white rounded transition-all duration-300">
                                 <ion-icon name="home-outline" class="mr-3 text-2xl"></ion-icon>
-                                Dashboard
+                                Tableau de bord
                             </a>
                         </li>
             <?php endif; ?>
@@ -50,7 +50,7 @@ $base_url = 'http://localhost/cafeteria/';
                             <a href="<?php echo $base_url; ?>modules/users/users.php"
                                 class="flex items-center px-5 py-3 font-semibold text-lg hover:bg-[#fcb126] hover:text-white rounded transition-all duration-300">
                                 <ion-icon name="people-circle-outline" class="mr-3 text-2xl"></ion-icon>
-                                Users
+                                Utilisateur
                             </a>
                         </li>
             <?php endif; ?>

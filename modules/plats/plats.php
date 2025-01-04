@@ -69,13 +69,13 @@ if (!isset($_SESSION['id'])) {
                 <h2 class="text-xl font-bold">Liste des plats</h2>
                 <!-- Bouton pour ajouter un plat -->
                 <?php if ($_SESSION['role_user'] == 'admin'): ?>
-                    <a href="#" id="openModal" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    <a href="#" id="openModal" class="bg-blue-900 text-white px-4 py-2 rounded hover:blue-900">
                         <ion-icon name="add-circle-outline" class="align-middle"></ion-icon> Ajouter un plat
                     </a>
                 <?php endif; ?>
             </div>
 
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto max-h-[300px] overflow-y-auto">
                 <table class="w-full border-collapse"
                     summary="Tableau affichant la liste des plats avec leurs descriptions, prix et actions disponibles">
                     <thead>
