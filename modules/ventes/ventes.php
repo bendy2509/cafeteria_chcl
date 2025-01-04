@@ -163,9 +163,10 @@ if (!isset($_SESSION['id'])) {
                         <div>
                             <label for="nbre_plat" class="block text-sm font-medium text-gray-700">Nombre de
                                 plats</label>
-                            <input type="number" id="nbre_plat" name="nbre_plat" min="1"
+                            <input type="number" id="nbre_plat" name="nbre_plat"
                                 placeholder="Entrez le nombre de plats"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                value="1"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" disabled>
                         </div>
                         <div class="flex justify-end">
                             <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">

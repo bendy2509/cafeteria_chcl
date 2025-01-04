@@ -13,8 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($type_client)) {
         $errors[] = "Le type de client est requis.";
     }
-    if (empty($phone_client) || !preg_match('/^\d{8}$/', $phone_client)) {
-        $errors[] = "Un numéro de téléphone valide (8 chiffres) est requis.";
+    if (empty($phone_client) || !preg_match('/^(\+509|509|\(509\))?(22|3[1-9]|4[0-4]|4[6-9]|55)\d{6}$/', $phone_client)) {
+        $errors[] = "Un numéro de téléphone valide est requis.";
     }
 
     if (empty($errors)) {

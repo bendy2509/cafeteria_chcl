@@ -6,7 +6,7 @@ require_once '../../includes/config.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $client = trim($_POST['client']);
     $code_plat = trim($_POST['plat']);
-    $nbre_plat = trim($_POST['nbre_plat']);
+    $nbre_plat = 1;
 
     $errors = [];
     if (empty($client)) {
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 //Verifier si le nombre de plat est insuffisant
                 $stmt = $pdo->prepare("
-                    SELECT nbre_plat FROM plats WHERE code_plat = :code_plat
+                    SELECT quantite_plat FROM plats WHERE code_plat = :code_plat
                 ");
                 $stmt->execute([
                     ':code_plat' => $code_plat
