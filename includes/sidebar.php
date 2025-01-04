@@ -1,5 +1,5 @@
 <?php
-$base_url = 'http://localhost/cafeteria_chcl/';
+$base_url = 'http://localhost/cafeteria/';
 ?>
 <aside class="w-72 bg-[#CA6207] text-white flex flex-col min-h-screen shadow-md rounded-lg overflow-hidden">
     <!-- Logo / Titre -->

@@ -84,7 +84,7 @@ try {
                     summary="Tableau affichant la liste des utilisateurs avec leurs rôles et actions disponibles">
                     <thead>
                         <tr class="bg-[#fcb126] text-left text-white">
-                            <th scope="col" class="border p-2 text-center">Pseudo</th>
+                            <th scope="col" class="border p-2 text-center">PSEUDO</th>
                             <th scope="col" class="border p-2 text-center">NOM</th>
                             <th scope="col" class="border p-2 text-center">ROLE</th>
                             <th scope="col" class="border p-2 text-center">STATUT</th>
@@ -102,6 +102,13 @@ try {
                                     <td class="bg-[#FBEA92] border p-2"><?= htmlspecialchars($user['pseudo_user']); ?></td>
                                     <td class="border p-2"><?= htmlspecialchars($user['nom_user']); ?></td>
                                     <td class="border p-2"><?= htmlspecialchars($user['role_user']); ?></td>
+                                    <td class="border p-2 text-center">
+                                        <?php if ($user['statut'] == 1): ?>
+                                            <span class="text-green-500">Activé</span>
+                                        <?php else: ?>
+                                            <span class="text-red-500">Désactivé</span>
+                                        <?php endif; ?>
+                                    </td>
                                     <td class="bg-[#FBEA92] border p-2 text-center flex justify-center gap-4">
                                         <?php if ($_SESSION['role_user'] == 'admin'): ?>
                                             <?php if ($user['id'] == $_SESSION['id']): ?>
@@ -152,11 +159,11 @@ try {
         <section>
             <!-- Modal -->
             <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
-                <div class="bg-[#fcb126] rounded-lg w-1/3 p-6 pt-0">
-                    <h3 class="text-2xl font-bold text-blue-800 mb-2 mt-0 pt-0">Ajouter un utilisateur</h3>
+                <div class="bg-white rounded-lg w-1/3 p-6">
+                    <h3 class="text-2xl font-bold text-blue-800 mb-4">Ajouter un utilisateur</h3>
 
                     <!-- Formulaire d'ajout d'utilisateur -->
-                    <form action="add_user.php" method="POST" class="bg-[#FBEA92] p-2 rounded-lg">
+                    <form action="add_user.php" method="POST">
                         <div class="flex justify-center items-center gap-6">
                             <div class="mb-2">
                                 <label for="nom_user" class="block text-gray-700">Nom</label>
@@ -182,7 +189,7 @@ try {
                             </div>
                         </div>
 
-                        <div class="mb-1">
+                        <div class="mb-2">
                             <label for="role_user" class="block text-gray-700">Rôle</label>
                             <select id="role_user" name="role_user"
                                 class="w-full p-2 border border-gray-300 rounded mt-2">
@@ -201,11 +208,11 @@ try {
                                 class="w-full p-2 border border-gray-300 rounded mt-2" required>
                         </div>
 
-                        <div class="flex justify-end mt-4">
+                        <div class="flex justify-end">
                             <button type="button" id="closeModal"
-                                class="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600">Annuler</button>
+                                class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Annuler</button>
                             <button type="submit"
-                                class="bg-blue-500 text-white px-4 py-1 ml-2 rounded hover:bg-blue-600">Ajouter</button>
+                                class="bg-blue-500 text-white px-4 py-2 ml-2 rounded hover:bg-blue-600">Ajouter</button>
                         </div>
                     </form>
                 </div>
@@ -216,11 +223,11 @@ try {
         <section>
             <!-- Modal de modification -->
             <div id="editUserModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
-                <div class="bg-[#fcb126] rounded-lg w-1/3 p-6">
+                <div class="bg-white rounded-lg w-1/3 p-6">
                     <h3 class="text-2xl font-bold text-blue-800 mb-4">Modifier Utilisateur</h3>
 
                     <!-- Formulaire de modification d'utilisateur -->
-                    <form action="update_user.php" method="POST" class="bg-[#FBEA92] p-2 rounded-lg">
+                    <form action="update_user.php" method="POST">
                         <!-- Champs cachés pour passer l'ID de l'utilisateur -->
                         <input type="hidden" id="id_user_edit" name="id_user">
 
