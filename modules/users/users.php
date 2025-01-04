@@ -153,11 +153,11 @@ try {
         <section>
             <!-- Modal -->
             <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
-                <div class="bg-white rounded-lg w-1/3 p-6">
+                <div class="bg-[#fcb126] rounded-lg w-1/3 p-6">
                     <h3 class="text-2xl font-bold text-blue-800 mb-4">Ajouter un utilisateur</h3>
 
                     <!-- Formulaire d'ajout d'utilisateur -->
-                    <form action="add_user.php" method="POST">
+                    <form action="add_user.php" method="POST" class="space-y-4 bg-[#FBEA92] p-4 rounded-lg">
                         <div class="flex justify-center items-center gap-6">
                             <div class="mb-2">
                                 <label for="nom_user" class="block text-gray-700">Nom</label>
@@ -217,11 +217,11 @@ try {
         <section>
             <!-- Modal de modification -->
             <div id="editUserModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
-                <div class="bg-white rounded-lg w-1/3 p-6">
+                <div class="bg-[#fcb126] rounded-lg w-1/3 p-6">
                     <h3 class="text-2xl font-bold text-blue-800 mb-4">Modifier Utilisateur</h3>
 
                     <!-- Formulaire de modification d'utilisateur -->
-                    <form action="update_user.php" method="POST">
+                    <form action="update_user.php" method="POST" class="space-y-4 bg-[#FBEA92] p-4 rounded-lg"s>
                         <!-- Champs cachés pour passer l'ID de l'utilisateur -->
                         <input type="hidden" id="id_user_edit" name="id_user">
 
