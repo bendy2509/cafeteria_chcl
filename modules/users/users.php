@@ -74,12 +74,11 @@ try {
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-bold">Liste des utilisateurs</h2>
                 <!-- Bouton d'ouverture du modal -->
-                <a href="#" id="openModal" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                <a href="#" id="openModal" class="bg-blue-900 text-white px-4 py-2 rounded hover:bg-[#15616D]">
                     <ion-icon name="add-circle-outline" class="align-middle"></ion-icon> Ajouter un utilisateur
                 </a>
             </div>
-
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto max-h-[300px] overflow-y-auto">
                 <table class="w-full border-collapse"
                     summary="Tableau affichant la liste des utilisateurs avec leurs rôles et actions disponibles">
                     <thead>
@@ -94,7 +93,7 @@ try {
                     <tbody>
                         <?php if (empty($users)): ?>
                             <tr>
-                                <td colspan="4" class="border p-2 text-center text-gray-500">Aucun utilisateur trouvé.</td>
+                                <td colspan="5" class="border p-2 text-center text-gray-500">Aucun utilisateur trouvé.</td>
                             </tr>
                         <?php else: ?>
                             <?php foreach ($users as $user): ?>
@@ -112,7 +111,6 @@ try {
                                     <td class="bg-[#FBEA92] border p-2 text-center flex justify-center gap-4">
                                         <?php if ($_SESSION['role_user'] == 'admin'): ?>
                                             <?php if ($user['id'] == $_SESSION['id']): ?>
-                                                <!-- Activer le bouton Modifier pour l'utilisateur connecte -->
                                                 <a href="#"
                                                     class="text-blue-500 hover:text-blue-700 px-3 py-1 rounded-md border border-blue-500 hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
                                                     id="openEditUserModal_<?= htmlspecialchars($user['id']); ?>"
@@ -121,13 +119,11 @@ try {
                                                     data-role="<?= htmlspecialchars($user['role_user']); ?>"
                                                     data-prenom="<?= htmlspecialchars($user['prenom_user']); ?>"
                                                     data-title="Modifier vos informations">Modifier</a>
-                                                <!-- Desactiver le bouton Supprimer -->
                                                 <button
                                                     class="text-gray-400 bg-gray-200 px-3 py-1 rounded-md border border-gray-300 cursor-not-allowed"
                                                     disabled aria-disabled="true"
                                                     title="Vous ne pouvez pas vous supprimer vous-même">Supprimer</button>
                                             <?php else: ?>
-                                                <!-- Boutons actifs pour les autres utilisateurs -->
                                                 <a href="#"
                                                     class="text-blue-500 hover:text-blue-700 px-3 py-1 rounded-md border border-blue-500 hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
                                                     id="openEditUserModal_<?= htmlspecialchars($user['id']); ?>"
@@ -142,13 +138,11 @@ try {
                                                     title="Supprimer l'utilisateur <?= htmlspecialchars($user['pseudo_user']); ?>">Supprimer</a>
                                             <?php endif; ?>
                                         <?php else: ?>
-                                            <!-- Si l'utilisateur n'est pas admin, les boutons ne sont pas affiches -->
                                             <span class="text-gray-400">Aucune action autorisée</span>
                                         <?php endif; ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
-
                         <?php endif; ?>
                     </tbody>
                 </table>

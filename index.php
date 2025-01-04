@@ -56,7 +56,7 @@ if ($_SESSION['role_user'] !== 'admin') {
     <main class="flex-grow p-6 min-h-screen relative">
         <!-- En-tête -->
         <header class="shadow p-6 rounded-lg text-center mb-6">
-            <h1 class="text-4xl font-extrabold text-blue-800">CAFETERIA DU CHCL</h1>
+            <h1 class="text-4xl font-extrabold text-blue-900">CAFETERIA DU CHCL</h1>
             <p class="text-gray-500 text-sm mt-2">Bienvenue sur votre tableau de bord</p>
         </header>
 
@@ -64,23 +64,51 @@ if ($_SESSION['role_user'] !== 'admin') {
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <?php
             $cards = [
-                ['title' => 'Total des Plats', 'icon' => 'restaurant-outline', 'value' => $data['totalPlats'], 'bgClass' => 'from-orange-500 to-orange-600'],
-                ['title' => 'Total des Clients', 'icon' => 'people-outline', 'value' => $data['totalClients'], 'bgClass' => 'from-green-500 to-green-600'],
-                ['title' => 'Total des Ventes', 'icon' => 'cart-outline', 'value' => $data['totalVentes'], 'bgClass' => 'from-orange-500 to-orange-600'],
-                ['title' => 'Total des Users', 'icon' => 'people-outline', 'value' => $data['totalUsers'], 'bgClass' => 'from-indigo-500 to-indigo-600'],
+                [
+                    'title' => 'Total des Plats',
+                    'icon' => 'restaurant-outline',
+                    'value' => $data['totalPlats'],
+                    'bgClass' => 'from-orange-500 to-orange-600',
+                    'link' => './modules/plats/plats.php'
+                ],
+                [
+                    'title' => 'Total des Clients',
+                    'icon' => 'people-outline',
+                    'value' => $data['totalClients'],
+                    'bgClass' => 'from-green-500 to-green-600',
+                    'link' => './modules/clients/clients.php'
+                ],
+                [
+                    'title' => 'Total des Ventes',
+                    'icon' => 'cart-outline',
+                    'value' => $data['totalVentes'],
+                    'bgClass' => 'from-orange-500 to-orange-600',
+                    'link' => './modules/ventes/ventes.php'
+                ],
+                [
+                    'title' => 'Total des Users',
+                    'icon' => 'people-outline',
+                    'value' => $data['totalUsers'],
+                    'bgClass' => 'from-[#15616D] to-[#15616D]',
+                    'link' => './modules/users/users.php'
+                ],
             ];
 
             foreach ($cards as $card): ?>
-                <div
-                    class="bg-gradient-to-br <?= $card['bgClass']; ?> text-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-                    <div class="flex items-center">
-                        <ion-icon name="<?= $card['icon']; ?>" class="text-4xl mr-4"></ion-icon>
-                        <div>
-                            <h3 class="text-lg font-semibold"><?= htmlspecialchars($card['title']); ?></h3>
-                            <p class="text-5xl font-extrabold mt-2"><?= htmlspecialchars($card['value']); ?></p>
+                <a href="<?= $card['link']; ?>">
+                    <div
+                        class="bg-gradient-to-br <?= $card['bgClass']; ?> 
+                       text-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105">
+                        <div class="flex items-center">
+                            <ion-icon name="<?= $card['icon']; ?>" class="text-4xl mr-4"></ion-icon>
+                            <div>
+                                <h3 class="text-lg font-semibold"><?= htmlspecialchars($card['title']); ?></h3>
+                                <p class="text-5xl font-extrabold mt-2"><?= htmlspecialchars($card['value']); ?></p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
+
             <?php endforeach; ?>
         </div>
         <!-- Ajout du bouton pour générer un rapport centré vers le bas -->
@@ -94,8 +122,7 @@ if ($_SESSION['role_user'] !== 'admin') {
 
         <section>
             <!-- Modal  -->
-            <div id="modal"
-                class="fixed inset-0 bg-gray-800 bg-opacity-50 items-center justify-center hidden">
+            <div id="modal" class="fixed inset-0 bg-gray-800 bg-opacity-50 items-center justify-center hidden">
                 <div class="bg-white rounded-lg shadow-lg p-6 w-[400px]">
                     <h2 class="text-xl font-bold mb-4 text-gray-800">Sélectionner les dates</h2>
                     <form id="dateForm" class="space-y-4" method="POST" action="generateRapport/rapport.php">
@@ -117,8 +144,7 @@ if ($_SESSION['role_user'] !== 'admin') {
                                 class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">
                                 Annuler
                             </button>
-                            <button type="submit"
-                                class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
                                 Confirmer
                             </button>
                         </div>

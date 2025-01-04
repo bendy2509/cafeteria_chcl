@@ -5,6 +5,7 @@ module.exports = {
     './assets/css/*.css',
     './assets/js/*.js',
     './modules/**/*.php',
+    './generateRapport/*.php',
   ],
   theme: {
     extend: {},

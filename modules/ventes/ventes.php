@@ -66,12 +66,12 @@ if (!isset($_SESSION['id'])) {
             ?>
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-bold">Liste des ventes</h2>
-                <a href="#" id="openModal" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                <a href="#" id="openModal" class="bg-blue-900 text-white px-4 py-2 rounded hover:bg-[#15616D]">
                     <ion-icon name="add-circle-outline" class="align-middle"></ion-icon> Ajouter une vente
                 </a>
             </div>
 
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto max-h-[300px] overflow-y-auto">
                 <table class="w-full border-collapse">
                     <thead>
                         <tr class="bg-[#fcb126] text-left text-white">
