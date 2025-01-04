@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom = htmlspecialchars(trim($_POST['nom_user_edit'])); // Sécuriser les données
     $role = htmlspecialchars(trim($_POST['role_user_edit']));
     $prenom = htmlspecialchars(trim($_POST['prenom_user_edit']));
+    $statut = htmlspecialchars(trim($_POST['statut_user_edit']));
 
     // Si des erreurs existent, les enregistrer dans la session et rediriger
     if (!empty($errors)) {
@@ -31,14 +32,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Préparer la requête pour mettre à jour les informations de l'utilisateur
         $stmt = $pdo->prepare("
             UPDATE users 
-            SET prenom_user = :prenom, nom_user = :nom, role_user = :role 
+            SET prenom_user = :prenom, nom_user = :nom, role_user = :role, statut = :statut
             WHERE id = :id
         ");
         $stmt->execute([
             ':prenom' => $prenom,
             ':nom' => $nom,
             ':role' => $role,
-            ':id' => $id
+            ':id' => $id,
+            ':statut' => $statut === 'true' ? 1 : 0
         ]);
 
         // Vérifier si une ligne a été affectée

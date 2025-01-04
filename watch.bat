@@ -1,2 +1,2 @@
 @echo off
-npx tailwindcss -i ./assets/css/tailwinds.css -o ./assets/css/styles.css --watch
+npx tailwindcss -i ./assets/css/tailwind.css -o ./assets/css/styles.css --watch

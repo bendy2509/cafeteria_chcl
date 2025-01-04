@@ -10,7 +10,7 @@ if (!isset($_SESSION['id'])) {
 
 try {
     // Recuperation des utilisateurs
-    $query = $pdo->query("SELECT id, prenom_user, nom_user, pseudo_user, role_user FROM users");
+    $query = $pdo->query("SELECT id, prenom_user, nom_user, pseudo_user, role_user, statut FROM users");
     $users = $query->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo "Erreur lors de la récupération des données : " . $e->getMessage();
@@ -84,10 +84,11 @@ try {
                     summary="Tableau affichant la liste des utilisateurs avec leurs rôles et actions disponibles">
                     <thead>
                         <tr class="bg-gray-100 text-left">
-                            <th scope="col" class="border p-2 text-center">Pseudo</th>
+                            <th scope="col" class="border p-2 text-center">PSEUDO</th>
                             <th scope="col" class="border p-2 text-center">NOM</th>
-                            <th scope="col" class="border p-2 text-center">Rôle</th>
-                            <th scope="col" class="border p-2 text-center">Actions</th>
+                            <th scope="col" class="border p-2 text-center">ROLE</th>
+                            <th scope="col" class="border p-2 text-center">STATUT</th>
+                            <th scope="col" class="border p-2 text-center">ACTIONS</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -101,6 +102,13 @@ try {
                                     <td class="border p-2"><?= htmlspecialchars($user['pseudo_user']); ?></td>
                                     <td class="border p-2"><?= htmlspecialchars($user['nom_user']); ?></td>
                                     <td class="border p-2"><?= htmlspecialchars($user['role_user']); ?></td>
+                                    <td class="border p-2 text-center">
+                                        <?php if ($user['statut'] == 1): ?>
+                                            <span class="text-green-500">Activé</span>
+                                        <?php else: ?>
+                                            <span class="text-red-500">Désactivé</span>
+                                        <?php endif; ?>
+                                    </td>
                                     <td class="border p-2 text-center flex justify-center gap-4">
                                         <?php if ($_SESSION['role_user'] == 'admin'): ?>
                                             <?php if ($user['id'] == $_SESSION['id']): ?>
@@ -243,11 +251,11 @@ try {
                                 </select>
                             </div>
                             <div class="mb-2">
-                                <label for="statut_user" class="block text-gray-700">Statut</label>
-                                <select id="statut_user" name="statut_user"
+                                <label for="statut_user_edit" class="block text-gray-700">Statut</label>
+                                <select id="statut_user_edit" name="statut_user_edit"
                                     class="w-full p-2 border border-gray-300 rounded mt-2">
-                                    <option value="admin">Activé (e)</option>
-                                    <option value="user">Désactivé (e)</option>
+                                    <option value="true">Activé (e)</option>
+                                    <option value="false">Désactivé (e)</option>
                                 </select>
                             </div>
                         </div>
