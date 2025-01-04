@@ -119,7 +119,6 @@ if (!isset($_SESSION['id'])) {
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
-
                         <?php endif; ?>
                     </tbody>
                 </table>
