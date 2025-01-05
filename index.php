@@ -7,9 +7,9 @@ require_once 'includes/config.php';
 try {
     // Préparation des requêtes SQL
     $queries = [
-        'totalPlats' => "SELECT COUNT(*) FROM plats",
+        'totalPlats' => "SELECT SUM(quantite_plat) FROM plats WHERE DATE(date_save) = CURDATE()",
         'totalClients' => "SELECT COUNT(*) FROM clients",
-        'totalVentes' => "SELECT COUNT(*) FROM ventes",
+        'totalVentes' => "SELECT COUNT(*) FROM ventes WHERE DATE(date_vente) = CURDATE()",
         'totalUsers' => "SELECT COUNT(*) FROM users",
     ];
 
@@ -65,7 +65,7 @@ if ($_SESSION['role_user'] !== 'admin') {
             <?php
             $cards = [
                 [
-                    'title' => 'Total des Plats',
+                    'title' => 'Total des Plats disponible aujourd\'hui',
                     'icon' => 'restaurant-outline',
                     'value' => $data['totalPlats'],
                     'bgClass' => 'from-orange-500 to-orange-600',
@@ -79,7 +79,7 @@ if ($_SESSION['role_user'] !== 'admin') {
                     'link' => './modules/clients/clients.php'
                 ],
                 [
-                    'title' => 'Total des Ventes',
+                    'title' => 'Total des Ventes aujourd\'hui',
                     'icon' => 'cart-outline',
                     'value' => $data['totalVentes'],
                     'bgClass' => 'from-orange-500 to-orange-600',

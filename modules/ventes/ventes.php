@@ -5,7 +5,7 @@ require_once '../../includes/config.php';
 try {
     // Récupération des ventes
     $stmt = $pdo->prepare("
-        SELECT vente.id, vente.code_client, vente.code_plat, vente.nbre_plat, plats.nom_plat, clients.nom_client
+        SELECT vente.id, vente.code_client, vente.code_plat, vente.nbre_plat, vente.date_vente, plats.nom_plat, clients.nom_client
         FROM ventes vente
         LEFT JOIN plats ON vente.code_plat = plats.code_plat
         LEFT JOIN clients ON vente.code_client = clients.code_client
@@ -76,9 +76,10 @@ if (!isset($_SESSION['id'])) {
                     <thead>
                         <tr class="bg-[#fcb126] text-left text-white">
                             <th class="border p-2 text-center">ID</th>
-                            <th class="border p-2 text-center">Client</th>
-                            <th class="border p-2 text-center">Plat</th>
-                            <th class="border p-2 text-center">Nombre</th>
+                            <th class="border p-2 text-center">CLIENT</th>
+                            <th class="border p-2 text-center">PLAT</th>
+                            <th class="border p-2 text-center">QTE</th>
+                            <th class="border p-2 text-center">DATE</th>
                             <th class="border p-2 text-center">Actions</th>
                         </tr>
                     </thead>
@@ -94,6 +95,7 @@ if (!isset($_SESSION['id'])) {
                                     <td class="border p-2"><?= htmlspecialchars($vente['nom_client']); ?></td>
                                     <td class="border p-2"><?= htmlspecialchars($vente['nom_plat']); ?></td>
                                     <td class="border p-2 text-center"><?= htmlspecialchars($vente['nbre_plat']); ?></td>
+                                    <td class="border p-2 text-center"><?= htmlspecialchars($vente['date_vente']); ?></td>
                                     <td class="bg-[#FBEA92] #border p-2 text-center flex justify-center gap-4">
                                         <?php if ($_SESSION['role_user'] == 'admin'): ?>
                                             <a href="#" id="openEditVenteModal_<?= htmlspecialchars($vente['id']); ?>"
@@ -152,7 +154,7 @@ if (!isset($_SESSION['id'])) {
                                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
                                 <option value="">Sélectionnez un plat</option>
                                 <?php
-                                $stmt = $pdo->query("SELECT * FROM plats");
+                                $stmt = $pdo->query("SELECT * FROM plats WHERE DATE(date_save) = CURDATE()");
                                 $plats = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 foreach ($plats as $plat) {
                                     echo '<option value="' . $plat['code_plat'] . '">' . htmlspecialchars($plat['nom_plat']) . '</option>';
@@ -163,10 +165,10 @@ if (!isset($_SESSION['id'])) {
                         <div>
                             <label for="nbre_plat" class="block text-sm font-medium text-gray-700">Nombre de
                                 plats</label>
-                            <input type="number" id="nbre_plat" name="nbre_plat"
-                                placeholder="Entrez le nombre de plats"
+                            <input type="number" id="nbre_plat" name="nbre_plat" placeholder="Entrez le nombre de plats"
                                 value="1"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" disabled>
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                disabled>
                         </div>
                         <div class="flex justify-end">
                             <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">

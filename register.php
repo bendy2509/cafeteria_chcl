@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="./assets/css/styles.css">
 </head>
 
-<body class="flex items-center justify-center min-h-screen bg-[url('../images/background.jpg')] bg-cover bg-center bg-no-repeat">
+<body class="flex items-center justify-center min-h-screen bg-[#15616D]">
     <div class="bg-[#F57422] shadow-lg rounded-lg w-full max-w-md p-8">
         <div class="bg-[#15616D] text-white text-center p-6 rounded-t-lg">
             <h1 class="text-3xl font-bold">Créer un compte</h1>
@@ -155,9 +155,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </button>
         </form>
 
-        <div class="text-center mt-6">
+        <div class="text-center font-bold mt-6">
             <p class="text-sm text-white">Vous avez déjà un compte ? <a href="login.php"
-                    class="text-indigo-600 hover:underline">Connectez-vous</a></p>
+                    class="text-[#15616D] hover:underline">Connectez-vous</a></p>
         </div>
     </div>
 </body>

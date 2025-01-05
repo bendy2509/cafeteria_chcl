@@ -4,7 +4,7 @@ require_once '../../includes/config.php';
 
 try {
     // Récupération des plats
-    $query = $pdo->query("SELECT code_plat, nom_plat, cuisson_plat, prix_plat, quantite_plat FROM plats");
+    $query = $pdo->query("SELECT code_plat, nom_plat, cuisson_plat, prix_plat, quantite_plat, date_save FROM plats");
     $plats = $query->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo "Erreur lors de la récupération des données : " . $e->getMessage();
@@ -85,6 +85,7 @@ if (!isset($_SESSION['id'])) {
                             <th scope="col" class="border p-2 text-center">CUISSON</th>
                             <th scope="col" class="border p-2 text-center">PRIX</th>
                             <th scope="col" class="border p-2 text-center">QUANTIE</th>
+                            <th scope="col" class="border p-2 text-center">DATE</th>
                             <th scope="col" class="border p-2 text-center">Actions</th>
                         </tr>
                     </thead>
@@ -101,6 +102,7 @@ if (!isset($_SESSION['id'])) {
                                     <td class="border p-2"><?= htmlspecialchars($plat['cuisson_plat']); ?></td>
                                     <td class="border p-2"><?= htmlspecialchars($plat['prix_plat']); ?> HTG</td>
                                     <td class="border p-2"><?= htmlspecialchars($plat['quantite_plat']); ?></td>
+                                    <td class="border p-2"><?= htmlspecialchars($plat['date_save']); ?></td>
                                     <td class=" bg-[#FBEA92] border p-2 text-center flex justify-center gap-4">
                                         <?php if ($_SESSION['role_user'] == 'admin'): ?>
                                             <a href="#"
