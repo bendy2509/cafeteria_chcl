@@ -43,6 +43,11 @@ if ($_SESSION['role_user'] !== 'admin') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Cafétéria</title>
     <link rel="stylesheet" href="./assets/css/styles.css">
+    <!-- Ajouter des balise meta pour og-->
+    <meta property="og:title" content="Connexion à la Cafétéria CHCL">
+    <meta property="og:description" content="Connectez-vous pour accéder à votre compte sur la plateforme de la Cafétéria du CHCL.">
+    <meta property="og:url" content="http://www.cafeteriachcl.great-site.net/assets/images/cafeteriachcl.webp">
+    <meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="bg-gray-50 min-h-screen flex">
@@ -152,13 +157,7 @@ if ($_SESSION['role_user'] !== 'admin') {
                 </div>
             </div>
         </section>
-
-
     </main>
-
-
-
-
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script>

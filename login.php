@@ -51,6 +51,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
     <link rel="stylesheet" href="./assets/css/styles.css">
+    <!-- Ajouter des balise meta pour og-->
+    <meta property="og:title" content="Connexion à la Cafétéria CHCL">
+    <meta property="og:description"
+        content="Connectez-vous pour accéder à votre compte sur la plateforme de la Cafétéria du CHCL.">
+    <meta property="og:url" content="http://www.cafeteriachcl.great-site.net/assets/images/cafeteriachcl.webp">
+    <meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="flex items-center justify-center min-h-screen bg-[#15616D]">
@@ -94,11 +100,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </button>
         </form>
 
-        <div class="text-center font-bold mt-6">
-            <p class="text-sm text-white">Vous n'avez pas de compte ? <a href="register.php"
-                    class="text-[#15616D] hover:underline">Inscrivez-vous</a></p>
+        <div class="text-center font-bold mt-6 relative group">
+    <p class="text-sm text-white">
+        Vous n'avez pas de compte ?
+        <a href="register.php" class="text-[#15616D] hover:underline">Inscrivez-vous</a>
+    </p>
+    <div class="flex items-center justify-center mt-4">
+        <!-- L'icône -->
+        <ion-icon name="people-circle-outline" class="text-[24px] text-[#FBEA92] group-hover:scale-110 transition"></ion-icon>
+        
+        <!-- Noms des développeurs (cachés par défaut) -->
+        <div class="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-[#FBEA92] text-[#15616D] text-xs px-4 py-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition duration-300 pointer-events-none">
+            <p>Albikendy JEAN</p>
+            <p>Bendy SERVILUS</p>
+            <p>Blemy JOSEPH</p>
         </div>
     </div>
+</div>
+
+
+    </div>
 </body>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
 </html>
